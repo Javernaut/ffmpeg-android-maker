@@ -20,10 +20,8 @@ You have to define an environment variable `ANDROID_NDK_HOME` and set the correc
 
 Well, just execute the script :) Examine the `output` directory after.
 
+And the actual Android app can be found [here](https://github.com/Javernaut/WhatTheCodec)
+
 ## Known issues:
 
 The x86 binary doesn't have assembler optimizations, since they bring text relocations. So it may encounter certain performance issues. The x86_64 doesn't have this problem though.
-
-## TODO:
-
-Upload the sample project where the compiled library is actually used.
