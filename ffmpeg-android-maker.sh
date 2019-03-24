@@ -84,7 +84,6 @@ function assemble() {
     --enable-shared \
     --disable-static \
     --disable-debug \
-    --enable-small \
     --disable-runtime-cpudetect \
     --disable-programs \
     --disable-muxers \
