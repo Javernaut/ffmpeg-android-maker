@@ -65,6 +65,7 @@ function assemble() {
       FFMPEG_ARCH_FLAG=x86_64
       CROSS_PREFIX=x86_64-linux-android-
       CC_PREFIX=x86_64
+      EXTRA_CONFIGURE_FLAGS=--x86asmexe=${TOOLCHAIN_PATH}/bin/yasm
   		;;
   esac
 
