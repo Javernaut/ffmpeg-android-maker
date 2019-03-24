@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FFMPEG_VERSION=4.1.1
+FFMPEG_VERSION=4.1.2
 
 # Directories used by the script
 BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
