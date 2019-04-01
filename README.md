@@ -3,7 +3,7 @@
 Here is a script that downloads the source code of [FFmpeg](https://www.ffmpeg.org) library and assembles it for Android. The script produces shared libraries as well as header files. The output structure looks like this:  
 <img src="https://github.com/Javernaut/ffmpeg-android-maker/blob/master/images/output_structure.png" width="200">  
 The actual content of all this directories depends on how the FFmpeg was configured before assembling. For my purpose I enabled only *libavcodec*, *libavformat* and *libavutil*, but you can set your own configuration to make the FFmpeg you need.
-The version of FFmpeg here is **4.1.2**. And the script expects to use Android NDK **r19** (*b* and *c* also work as well as *r20-beta1*). Starting with FFmpeg 4.1 and NDK r19 the whole process became much simpler.
+The version of FFmpeg here is **4.1.3**. And the script expects to use Android NDK **r19** (*b* and *c* also work as well as *r20-beta1*). Starting with FFmpeg 4.1 and NDK r19 the whole process became much simpler.
 
 ## Supported architectures
 
