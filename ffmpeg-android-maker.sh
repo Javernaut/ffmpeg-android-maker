@@ -91,7 +91,6 @@ function assemble() {
     --disable-bsfs \
     --disable-pthreads \
     --disable-avdevice \
-    --disable-swscale \
     --disable-network \
     --disable-postproc \
     --disable-swresample \
