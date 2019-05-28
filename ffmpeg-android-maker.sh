@@ -2,6 +2,12 @@
 
 FFMPEG_VERSION=4.1.3
 
+# Assuming the script is used on macOS of Linux machine
+case "$OSTYPE" in
+  darwin*)  HOST_TAG="darwin-x86_64" ;;
+  linux*)   HOST_TAG="linux-x86_64" ;;
+esac
+
 # Directories used by the script
 BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
 SOURCES_DIR=${BASE_DIR}/sources
@@ -35,7 +41,7 @@ function assemble() {
   ARCH=$1
   API_LEVEL=$2
 
-  TOOLCHAIN_PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/darwin-x86_64
+  TOOLCHAIN_PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_TAG}
   SYSROOT=${TOOLCHAIN_PATH}/sysroot
 
   CC_ANDROID_POSTFIX=
