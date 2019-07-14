@@ -14,13 +14,16 @@ SOURCES_DIR=${BASE_DIR}/sources
 FFMPEG_SOURCES=${SOURCES_DIR}/ffmpeg-${FFMPEG_VERSION}
 OUTPUT_DIR=${BASE_DIR}/output
 BUILD_DIR=${BASE_DIR}/build
+STATS_DIR=${BASE_DIR}/stats
 
 # No incremental compilation here. Just drop what was built previously
 rm -rf ${BUILD_DIR}
+rm -rf ${STATS_DIR}
 rm -rf ${OUTPUT_DIR}
+mkdir -p ${STATS_DIR}
 mkdir -p ${OUTPUT_DIR}
 
-# Test if sources of the FFMpeg exist. If not - download them
+# Test if sources of the FFmpeg exist. If not - download them
 function ensureSources() {
   if [[ ! -d "$FFMPEG_SOURCES" ]]; then
     TARGET_FILE_NAME=ffmpeg-${FFMPEG_VERSION}.tar.bz2
@@ -33,7 +36,7 @@ function ensureSources() {
   fi
 }
 
-# Actual magic of configuring and compiling of FFMpeg for a certain architecture.
+# Actual magic of configuring and compiling of FFmpeg for a certain architecture.
 # Supported architectures are: armeabi-v7a, arm64-v8a, x86 and x86_64
 function assemble() {
   cd ${FFMPEG_SOURCES}
@@ -106,6 +109,10 @@ function assemble() {
     make clean
     make -j8
     make install
+
+    # Saving stats about text relocation presence.
+    # If the result file doesn't have 'TEXTREL' at all, then we are good.
+    ${TOOLCHAIN_PATH}/bin/${CROSS_PREFIX}readelf --dynamic ${BUILD_DIR}/${ARCH}/lib/*.so | grep 'TEXTREL\|File' >> ${STATS_DIR}/text-relocations.txt
 
     cd ${BASE_DIR}
 }
