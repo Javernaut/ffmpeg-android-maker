@@ -80,6 +80,9 @@ function assemble() {
 
   CC=${TOOLCHAIN_PATH}/bin/${CC_PREFIX}-linux-android${CC_ANDROID_POSTFIX}${API_LEVEL}-clang
 
+  DECODERS_TO_ENABLE=
+  while IFS= read -r line; do DECODERS_TO_ENABLE="${DECODERS_TO_ENABLE} --enable-decoder=$line"; done < ${BASE_DIR}/video_decoders_list.txt
+
   ./configure \
     --prefix=${BUILD_DIR}/${ARCH} \
     --disable-doc \
@@ -97,6 +100,8 @@ function assemble() {
     --disable-programs \
     --disable-muxers \
     --disable-encoders \
+    --disable-decoders \
+    ${DECODERS_TO_ENABLE} \
     --disable-bsfs \
     --disable-pthreads \
     --disable-avdevice \
