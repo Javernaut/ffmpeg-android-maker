@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FFMPEG_VERSION=4.1.4
+FFMPEG_FALLBACK_VERSION=4.1.4
 
 # Assuming the script is used on macOS or Linux machine
 case "$OSTYPE" in
@@ -11,7 +11,6 @@ esac
 # Directories used by the script
 BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
 SOURCES_DIR=${BASE_DIR}/sources
-FFMPEG_SOURCES=${SOURCES_DIR}/ffmpeg-${FFMPEG_VERSION}
 OUTPUT_DIR=${BASE_DIR}/output
 BUILD_DIR=${BASE_DIR}/build
 STATS_DIR=${BASE_DIR}/stats
@@ -23,8 +22,13 @@ rm -rf ${OUTPUT_DIR}
 mkdir -p ${STATS_DIR}
 mkdir -p ${OUTPUT_DIR}
 
-# Test if sources of the FFmpeg exist. If not - download them
-function ensureSources() {
+# Getting sources of a particular ffmpeg release.
+# Same argument (ffmpeg version) produces the same source set.
+function ensureSourcesTag() {
+  FFMPEG_VERSION=$1
+
+  FFMPEG_SOURCES=${SOURCES_DIR}/ffmpeg-${FFMPEG_VERSION}
+
   if [[ ! -d "$FFMPEG_SOURCES" ]]; then
     TARGET_FILE_NAME=ffmpeg-${FFMPEG_VERSION}.tar.bz2
     TARGET_FILE_PATH=${SOURCES_DIR}/${TARGET_FILE_NAME}
@@ -34,6 +38,55 @@ function ensureSources() {
     tar xvjf ${TARGET_FILE_PATH} -C ${SOURCES_DIR}
     rm ${TARGET_FILE_PATH}
   fi
+}
+
+# Getting sources of a particular branch of ffmpeg's git repository.
+# Same argument (branch name) may produce different source set,
+# as the branch in origin repository may be updated in future.
+function ensureSourcesBranch() {
+  BRANCH=$1
+
+  GIT_DIRECTORY=ffmpeg-git
+
+  FFMPEG_SOURCES=${SOURCES_DIR}/${GIT_DIRECTORY}
+
+  cd ${SOURCES_DIR}
+
+  if [[ ! -d "$FFMPEG_SOURCES" ]]; then
+    git clone https://git.ffmpeg.org/ffmpeg.git ${GIT_DIRECTORY}
+  fi
+
+  cd ${GIT_DIRECTORY}
+  git checkout $BRANCH
+  # Forcing the update of a branch
+  git pull origin $BRANCH
+
+  # Additional logging to keep track of an exact commit to build
+  echo "Commit to build:"
+  git rev-parse HEAD
+
+  cd ${BASE_DIR}
+}
+
+# Test if sources of the FFmpeg exist. If not - download them
+function ensureSources() {
+  TYPE=$1
+  SECOND_ARGUMENT=$2
+
+  case $TYPE in
+  	tag)
+      echo "Using FFmpeg ${SECOND_ARGUMENT}"
+  		ensureSourcesTag ${SECOND_ARGUMENT}
+  		;;
+  	branch)
+      echo "Using FFmpeg git repository and its branch ${SECOND_ARGUMENT}"
+  		ensureSourcesBranch ${SECOND_ARGUMENT}
+  		;;
+  	*)
+  		echo "Using FFmpeg 4.1.4"
+      ensureSourcesTag ${FFMPEG_FALLBACK_VERSION}
+  		;;
+  esac
 }
 
 # Actual magic of configuring and compiling of FFmpeg for a certain architecture.
@@ -153,7 +206,7 @@ function installHeaders() {
 
 # Actual work
 
-ensureSources
+ensureSources $1 $2
 
 build armeabi-v7a 16
 build arm64-v8a 21
