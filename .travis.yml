@@ -1,0 +1,12 @@
+language: android
+dist: trusty
+before_install:
+  # Installing the ndk and assembling the FFmpeg
+  - yes | sdkmanager "ndk-bundle"
+  - yes | sdkmanager "patcher;v4"
+  - export ANDROID_NDK_HOME=/usr/local/android-sdk/ndk-bundle
+  # Keeping track of the NDK version that was used
+  - cat $ANDROID_NDK_HOME/source.properties
+script:
+  - ./ffmpeg-android-maker.sh
+  - cat stats/text-relocations.txt
