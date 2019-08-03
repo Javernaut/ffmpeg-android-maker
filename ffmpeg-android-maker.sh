@@ -21,6 +21,8 @@ rm -rf ${STATS_DIR}
 rm -rf ${OUTPUT_DIR}
 mkdir -p ${STATS_DIR}
 mkdir -p ${OUTPUT_DIR}
+# Note: the 'source' folder wasn't actually deleted, just ensure it exists
+mkdir -p ${SOURCES_DIR}
 
 # Getting sources of a particular ffmpeg release.
 # Same argument (ffmpeg version) produces the same source set.
@@ -33,7 +35,6 @@ function ensureSourcesTag() {
     TARGET_FILE_NAME=ffmpeg-${FFMPEG_VERSION}.tar.bz2
     TARGET_FILE_PATH=${SOURCES_DIR}/${TARGET_FILE_NAME}
 
-    mkdir -p ${SOURCES_DIR}
     curl https://www.ffmpeg.org/releases/${TARGET_FILE_NAME} --output ${TARGET_FILE_PATH}
     tar xvjf ${TARGET_FILE_PATH} -C ${SOURCES_DIR}
     rm ${TARGET_FILE_PATH}
