@@ -28,4 +28,6 @@ And the actual Android app can be found [here](https://github.com/Javernaut/What
 
 **Setting your own FFmpeg version**. You can actually override the version of FFmpeg used by the script. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Invocation-parameters).
 
+**Test your script in a cloud**. This repository has CI integration and you can use it too for your own configurations of FFmpeg. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Build-automation).
+
 **Text relocations monitoring**. After a build you can look into stats/text-relocations.txt file. That file lists all *.so files that were built and reports if they have text relocations. If you don't see any mentioning of 'TEXTREL' in the file, you are good. Otherwise, you will see exact binaries that have this problem.   
