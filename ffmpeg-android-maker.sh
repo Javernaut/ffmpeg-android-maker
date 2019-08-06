@@ -6,6 +6,12 @@ FFMPEG_FALLBACK_VERSION=4.1.4
 case "$OSTYPE" in
   darwin*)  HOST_TAG="darwin-x86_64" ;;
   linux*)   HOST_TAG="linux-x86_64" ;;
+  msys)
+    case "$(uname -m)" in
+      x86_64) HOST_TAG="windows-x86_64" ;;
+      i686)   HOST_TAG="windows" ;;
+    esac
+  ;;
 esac
 
 # Directories used by the script
