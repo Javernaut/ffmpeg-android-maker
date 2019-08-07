@@ -2,7 +2,8 @@
 
 FFMPEG_FALLBACK_VERSION=4.2
 
-# Assuming the script is used on macOS or Linux machine
+# Defining a toolchan directory's name according to the current OS.
+# Assume that proper version of NDK is installed.
 case "$OSTYPE" in
   darwin*)  HOST_TAG="darwin-x86_64" ;;
   linux*)   HOST_TAG="linux-x86_64" ;;
@@ -30,6 +31,7 @@ mkdir -p ${OUTPUT_DIR}
 # Note: the 'source' folder wasn't actually deleted, just ensure it exists
 mkdir -p ${SOURCES_DIR}
 
+# Utility function
 # Getting sources of a particular ffmpeg release.
 # Same argument (ffmpeg version) produces the same source set.
 function ensureSourcesTag() {
@@ -47,6 +49,7 @@ function ensureSourcesTag() {
   fi
 }
 
+# Utility function
 # Getting sources of a particular branch of ffmpeg's git repository.
 # Same argument (branch name) may produce different source set,
 # as the branch in origin repository may be updated in future.
@@ -75,6 +78,7 @@ function ensureSourcesBranch() {
   cd ${BASE_DIR}
 }
 
+# Utility function
 # Test if sources of the FFmpeg exist. If not - download them
 function ensureSources() {
   TYPE=$1
@@ -107,9 +111,6 @@ function assemble() {
   TOOLCHAIN_PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_TAG}
   SYSROOT=${TOOLCHAIN_PATH}/sysroot
 
-  EXTRA_CFLAGS=
-  EXTRA_CONFIGURE_FLAGS=
-
   TARGET_TRIPLE_MACHINE_BINUTILS=
   TARGET_TRIPLE_MACHINE_CC=
   TARGET_TRIPLE_OS="android"
@@ -132,65 +133,70 @@ function assemble() {
       #binutils i686-linux-android  -ld
       TARGET_TRIPLE_MACHINE_BINUTILS=i686
 
-      EXTRA_CFLAGS=-mno-stackrealign
-      EXTRA_CONFIGURE_FLAGS=--disable-asm
+      # Disabling assembler optimizations, because they have text relocations
+      EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
   		;;
     x86_64)
       #cc       x86_64-linux-android21-clang
       #binutils x86_64-linux-android  -ld
       TARGET_TRIPLE_MACHINE_BINUTILS=x86_64
 
-      EXTRA_CONFIGURE_FLAGS=--x86asmexe=${TOOLCHAIN_PATH}/bin/yasm
+      EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${TOOLCHAIN_PATH}/bin/yasm
   		;;
   esac
 
   # If the cc-specific variable isn't set, we fallback to binutils version
   [ -z "${TARGET_TRIPLE_MACHINE_CC}" ] && TARGET_TRIPLE_MACHINE_CC=${TARGET_TRIPLE_MACHINE_BINUTILS}
 
+  # Common prefix for ld, as, etc.
   CROSS_PREFIX=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
 
+  # The name for compiler is slightly different, so it is defined separatly.
   CC=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${API_LEVEL}-clang
 
+  # Reading a list of video codecs to enable
   DECODERS_TO_ENABLE=
   while IFS= read -r line; do DECODERS_TO_ENABLE="${DECODERS_TO_ENABLE} --enable-decoder=$line"; done < ${BASE_DIR}/video_decoders_list.txt
 
+  # Everything that goes below ${EXTRA_BUILD_CONFIGURATION_FLAGS} is my project-specific.
+  # You are free to enable/disable whatever you actually need.
   ./configure \
     --prefix=${BUILD_DIR}/${ABI} \
     --enable-cross-compile \
-    --cross-prefix=${CROSS_PREFIX} \
-    --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
     --target-os=android \
-    --cc=${CC} \
-    --extra-cflags="-O3 -fPIC $EXTRA_CFLAGS" \
+    --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
     --sysroot=${SYSROOT} \
+    --cross-prefix=${CROSS_PREFIX} \
+    --cc=${CC} \
+    --extra-cflags="-O3 -fPIC" \
     --enable-shared \
     --disable-static \
-    --disable-doc \
+    ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
     --disable-runtime-cpudetect \
-    --disable-debug \
     --disable-programs \
     --disable-muxers \
     --disable-encoders \
-    --disable-decoders \
-    ${DECODERS_TO_ENABLE} \
-    --disable-bsfs \
-    --disable-pthreads \
     --disable-avdevice \
-    --disable-network \
     --disable-postproc \
     --disable-swresample \
     --disable-avfilter \
-    ${EXTRA_CONFIGURE_FLAGS}
+    --disable-doc \
+    --disable-debug \
+    --disable-pthreads \
+    --disable-network \
+    --disable-bsfs \
+    --disable-decoders \
+    ${DECODERS_TO_ENABLE}
 
-    make clean
-    make -j8
-    make install
+  make clean
+  make -j8
+  make install
 
-    # Saving stats about text relocation presence.
-    # If the result file doesn't have 'TEXTREL' at all, then we are good.
-    ${CROSS_PREFIX}readelf --dynamic ${BUILD_DIR}/${ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${STATS_DIR}/text-relocations.txt
+  # Saving stats about text relocation presence.
+  # If the result file doesn't have 'TEXTREL' at all, then we are good.
+  ${CROSS_PREFIX}readelf --dynamic ${BUILD_DIR}/${ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${STATS_DIR}/text-relocations.txt
 
-    cd ${BASE_DIR}
+  cd ${BASE_DIR}
 }
 
 # Placing build *.so files into the /bin directory
