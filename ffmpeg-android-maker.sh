@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FFMPEG_FALLBACK_VERSION=4.1.4
+FFMPEG_FALLBACK_VERSION=4.2
 
 # Assuming the script is used on macOS or Linux machine
 case "$OSTYPE" in
@@ -90,7 +90,7 @@ function ensureSources() {
   		ensureSourcesBranch ${SECOND_ARGUMENT}
   		;;
   	*)
-  		echo "Using FFmpeg 4.1.4"
+  		echo "Using FFmpeg ${FFMPEG_FALLBACK_VERSION}"
       ensureSourcesTag ${FFMPEG_FALLBACK_VERSION}
   		;;
   esac

@@ -2,13 +2,16 @@
 
 [![Build Status](https://travis-ci.org/Javernaut/ffmpeg-android-maker.svg?branch=master)](https://travis-ci.org/Javernaut/ffmpeg-android-maker)
 
-Here is a script that downloads the source code of [FFmpeg](https://www.ffmpeg.org) library and assembles it for Android. The script produces shared libraries as well as header files. The output structure looks like this:  
-<img src="https://github.com/Javernaut/ffmpeg-android-maker/blob/master/images/output_structure.png" width="200">  
+Here is a script that downloads the source code of [FFmpeg](https://www.ffmpeg.org) library and assembles it for Android. The script produces shared libraries as well as header files. The output structure looks like this:
+
+<img src="https://github.com/Javernaut/ffmpeg-android-maker/blob/master/images/output_structure.png" width="200">
+
 The actual content of all this directories depends on how the FFmpeg was configured before assembling. For my purpose I enabled only *libavcodec*, *libavformat*, *libavutil* and *libswscale*, but you can set your own configuration to make the FFmpeg you need.
-The version of FFmpeg here by default is **4.1.4** (but can be overridden). And the script expects to use **at least** Android NDK **r19** (*r20* also works ok). Starting with FFmpeg 4.1 and NDK r19 the whole process became much simpler.
+
+The version of FFmpeg here by default is **4.2** (but can be overridden). And the script expects to use **at least** Android NDK **r19** (*r20* also works ok).
 
 ## Supported Android ABIs
-a
+
 * armeabi-v7a
 * arm64-v8a
 * x86
