@@ -33,7 +33,7 @@ Actual Android app that uses the output of the script can be found [here](https:
 
 ## Features
 
-**Setting your own FFmpeg version**. You can actually override the version of FFmpeg used by the script. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Invocation-parameters).
+**Setting your own FFmpeg version**. You can actually override the version of FFmpeg used by the script. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Setting-the-FFmpeg-version).
 
 **Test your script in a cloud**. This repository has CI integration and you can use it too for your own configurations of FFmpeg. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Build-automation).
 
