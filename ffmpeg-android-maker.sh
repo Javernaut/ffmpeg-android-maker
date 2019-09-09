@@ -2,7 +2,7 @@
 
 FFMPEG_FALLBACK_VERSION=4.2.1
 
-# Defining a toolchan directory's name according to the current OS.
+# Defining a toolchain directory's name according to the current OS.
 # Assume that proper version of NDK is installed.
 case "$OSTYPE" in
   darwin*)  HOST_TAG="darwin-x86_64" ;;
