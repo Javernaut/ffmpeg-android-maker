@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-FFMPEG_FALLBACK_VERSION=4.2
+FFMPEG_FALLBACK_VERSION=4.2.1
 
 # Defining a toolchan directory's name according to the current OS.
 # Assume that proper version of NDK is installed.
