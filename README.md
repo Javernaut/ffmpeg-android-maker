@@ -8,7 +8,9 @@ Here is a script that downloads the source code of [FFmpeg](https://www.ffmpeg.o
 
 The actual content of all this directories depends on how the FFmpeg was configured before assembling. For my purpose I enabled only *libavcodec*, *libavformat*, *libavutil* and *libswscale*, but you can set your own configuration to make the FFmpeg you need.
 
-The version of FFmpeg here by default is **4.2** (but can be overridden). And the script expects to use **at least** Android NDK **r19** (*r20* also works ok).
+The version of FFmpeg here by default is **4.2.1** (but can be overridden). And the script expects to use **at least** Android NDK **r19** (*r20* also works ok).
+
+The details of how this script is implemented are described in [this blog post](https://proandroiddev.com/a-story-about-ffmpeg-in-android-part-i-compilation-898e4a249422).
 
 ## Supported Android ABIs
 
@@ -29,7 +31,7 @@ You have to define an environment variable `ANDROID_NDK_HOME` and set it to a co
 
 ## See it in action
 
-Actual Android app that uses the output of the script can be found [here](https://github.com/Javernaut/WhatTheCodec)
+Actual Android app that uses the output of the script can be found [here](https://github.com/Javernaut/WhatTheCodec).
 
 ## Features
 
