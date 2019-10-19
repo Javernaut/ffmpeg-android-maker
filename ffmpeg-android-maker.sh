@@ -154,10 +154,6 @@ function assemble() {
   # The name for compiler is slightly different, so it is defined separatly.
   CC=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${API_LEVEL}-clang
 
-  # Reading a list of video codecs to enable
-  DECODERS_TO_ENABLE=
-  while IFS= read -r line; do DECODERS_TO_ENABLE="${DECODERS_TO_ENABLE} --enable-decoder=$line"; done < ${BASE_DIR}/video_decoders_list.txt
-
   # Everything that goes below ${EXTRA_BUILD_CONFIGURATION_FLAGS} is my project-specific.
   # You are free to enable/disable whatever you actually need.
   ./configure \
@@ -184,9 +180,7 @@ function assemble() {
     --disable-debug \
     --disable-pthreads \
     --disable-network \
-    --disable-bsfs \
-    --disable-decoders \
-    ${DECODERS_TO_ENABLE}
+    --disable-bsfs
 
   make clean
   make -j8
