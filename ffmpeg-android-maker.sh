@@ -122,6 +122,8 @@ function assemble() {
       TARGET_TRIPLE_MACHINE_BINUTILS=arm
       TARGET_TRIPLE_MACHINE_CC=armv7a
       TARGET_TRIPLE_OS=androideabi
+
+      EXTRA_BUILD_CONFIGURATION_FLAGS=--enable-thumb
   		;;
     arm64-v8a)
       #cc       aarch64-linux-android21-clang
