@@ -15,6 +15,12 @@ case "$OSTYPE" in
   ;;
 esac
 
+if [[ $OSTYPE == "darwin"* ]]; then
+  NPROC=$(sysctl -n hw.physicalcpu)
+else
+  NPROC=$(nproc)
+fi
+
 # Directories used by the script
 BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
 SOURCES_DIR=${BASE_DIR}/sources
@@ -185,7 +191,7 @@ function assemble() {
     --disable-bsfs
 
   make clean
-  make -j8
+  make -j${NPROC}
   make install
 
   # Saving stats about text relocation presence.
