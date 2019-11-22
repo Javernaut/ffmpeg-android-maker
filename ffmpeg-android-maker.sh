@@ -190,7 +190,14 @@ function assemble() {
 
   # Saving stats about text relocation presence.
   # If the result file doesn't have 'TEXTREL' at all, then we are good.
-  ${CROSS_PREFIX}readelf --dynamic ${BUILD_DIR}/${ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${STATS_DIR}/text-relocations.txt
+  TEXT_REL_STATS_FILE=${STATS_DIR}/text-relocations.txt
+  ${CROSS_PREFIX}readelf --dynamic ${BUILD_DIR}/${ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE}
+
+  if grep -q TEXTREL ${TEXT_REL_STATS_FILE}; then
+    echo "There are text relocations in output files:"
+    cat ${TEXT_REL_STATS_FILE}
+    exit 1
+  fi
 
   cd ${BASE_DIR}
 }

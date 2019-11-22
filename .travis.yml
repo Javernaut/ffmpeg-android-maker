@@ -9,4 +9,3 @@ before_install:
   - cat $ANDROID_NDK_HOME/source.properties
 script:
   - bash -e ffmpeg-android-maker.sh
-  - cat stats/text-relocations.txt
