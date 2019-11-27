@@ -17,6 +17,6 @@
 
 export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lmp3lame"
 
-make clean
-make -j${HOST_NPROC}
-make install
+${MAKE_EXECUTABLE} clean
+${MAKE_EXECUTABLE} -j${HOST_NPROC}
+${MAKE_EXECUTABLE} install

@@ -4,7 +4,9 @@ before_install:
   # Installing the ndk and assembling the FFmpeg
   - yes | sdkmanager "ndk-bundle"
   - yes | sdkmanager "patcher;v4"
-  - export ANDROID_NDK_HOME=/usr/local/android-sdk/ndk-bundle
+  - yes | sdkmanager "cmake;3.10.2.4988404"
+  - export ANDROID_SDK_HOME=/usr/local/android-sdk
+  - export ANDROID_NDK_HOME=$ANDROID_SDK_HOME/ndk-bundle
   # Keeping track of the NDK version that was used
   - cat $ANDROID_NDK_HOME/source.properties
 script:

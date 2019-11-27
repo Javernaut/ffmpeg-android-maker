@@ -22,3 +22,8 @@ fi
 export HOST_TAG=$HOST_TAG
 # Number of physical cores in the system to facilitate parallel assembling
 export HOST_NPROC=$HOST_NPROC
+
+# Using CMake from the Android SDK
+export CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.10.2.4988404/bin/cmake
+# Using host Make, because Android NDK's Make (before r21) doesn't work properly on MSYS2 in Windows
+export MAKE_EXECUTABLE=make

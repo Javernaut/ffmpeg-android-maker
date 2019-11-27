@@ -54,6 +54,6 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --disable-bsfs \
   $ADDITIONAL_COMPONENTS
 
-make clean
-make -j${HOST_NPROC}
-make install
+${MAKE_EXECUTABLE} clean
+${MAKE_EXECUTABLE} -j${HOST_NPROC}
+${MAKE_EXECUTABLE} install

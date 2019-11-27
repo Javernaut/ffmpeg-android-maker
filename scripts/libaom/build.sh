@@ -4,7 +4,7 @@ rm -rf ${CMAKE_BUILD_DIR}
 mkdir ${CMAKE_BUILD_DIR}
 cd ${CMAKE_BUILD_DIR}
 
-cmake .. \
+${CMAKE_EXECUTABLE} .. \
  -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
  -DANDROID_ABI=${ANDROID_ABI} \
  -DCMAKE_TOOLCHAIN_FILE=${SCRIPTS_DIR}/libaom/android.cmake \
@@ -18,5 +18,5 @@ cmake .. \
  -DENABLE_EXAMPLES=0 \
  -DENABLE_TOOLS=0
 
-make -j${HOST_NPROC}
-make install
+${MAKE_EXECUTABLE} -j${HOST_NPROC}
+${MAKE_EXECUTABLE} install
