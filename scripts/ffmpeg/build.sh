@@ -18,6 +18,10 @@ do
   ADDITIONAL_COMPONENTS+=" --enable-$LIBARY_NAME"
 done
 
+# Referencing dependencies without pkgconfig
+DEP_CFLAGS="-I${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include"
+DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
+
 # Everything that goes below ${EXTRA_BUILD_CONFIGURATION_FLAGS} is my project-specific.
 # You are free to enable/disable whatever you actually need.
 
@@ -29,7 +33,8 @@ done
   --sysroot=${SYSROOT_PATH} \
   --cross-prefix=${CROSS_PREFIX_WITH_PATH} \
   --cc=${CC} \
-  --extra-cflags="-O3 -fPIC" \
+  --extra-cflags="-O3 -fPIC $DEP_CFLAGS" \
+  --extra-ldflags="$DEP_LD_FLAGS" \
   --enable-shared \
   --disable-static \
   --pkg-config=$(which pkg-config) \

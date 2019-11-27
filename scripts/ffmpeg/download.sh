@@ -14,7 +14,7 @@ function ensureSourcesTar() {
     TARGET_FILE_NAME=ffmpeg-${FFMPEG_SOURCE_VALUE}.tar.bz2
 
     curl https://www.ffmpeg.org/releases/${TARGET_FILE_NAME} --output ${TARGET_FILE_NAME}
-    tar xzf ${TARGET_FILE_NAME} -C .
+    tar xf ${TARGET_FILE_NAME} -C .
     rm ${TARGET_FILE_NAME}
   fi
 
@@ -60,7 +60,7 @@ case ${FFMPEG_SOURCE_TYPE} in
 	# 	ensureSourcesBranch ${SECOND_ARGUMENT}
 	# 	;;
 	TAR)
-		echo "Using FFmpeg source archive ${FFMPEG_FALLBACK_VERSION}"
+		echo "Using FFmpeg source archive ${FFMPEG_SOURCE_VALUE}"
     ensureSourcesTar
 		;;
 esac

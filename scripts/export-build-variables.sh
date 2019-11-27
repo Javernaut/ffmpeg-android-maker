@@ -67,8 +67,9 @@ export      SIZE=${CROSS_PREFIX_WITH_PATH}size
 export   STRINGS=${CROSS_PREFIX_WITH_PATH}strings
 export     STRIP=${CROSS_PREFIX_WITH_PATH}strip
 
+export TARGET=${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${ANDROID_PLATFORM}
 # The name for compiler is slightly different, so it is defined separatly.
-export CC=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${ANDROID_PLATFORM}-clang
+export CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
 export CXX=${CC}++
 # TODO consider abondaning this strategy of defining the name of the clang wrapper
 # in favour of just passing -mstackrealign and -fno-addrsig depending on
@@ -76,3 +77,6 @@ export CXX=${CC}++
 
 # Special variable for the yasm assembler
 export YASM=${TOOLCHAIN_PATH}/bin/yasm
+
+# A variable to which certain dependencies can add -l arguments during build.sh
+export FFMPEG_EXTRA_LD_FLAGS=

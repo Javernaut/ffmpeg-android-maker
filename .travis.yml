@@ -8,4 +8,4 @@ before_install:
   # Keeping track of the NDK version that was used
   - cat $ANDROID_NDK_HOME/source.properties
 script:
-  - bash -e ffmpeg-android-maker.sh
+  - bash -e ffmpeg-android-maker.sh --enable-libmp3lame
