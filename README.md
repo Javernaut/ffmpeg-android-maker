@@ -27,7 +27,11 @@ It is also possible to execute this script on a **Windows** machine with [MSYS2]
 
 ## Prerequisites
 
-You have to define an environment variable `ANDROID_NDK_HOME` and set it to a correct path to your Android NDK.
+You have to define two environment variables:
+* `ANDROID_SDK_HOME` - path to your Android SDK
+* `ANDROID_NDK_HOME` - path to your Android NDK
+
+Also, if you want to build *libaom*, then you have to install cmake;3.10.2.4988404 package via Android SDK.
 
 ## See it in action
 
