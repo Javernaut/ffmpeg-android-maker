@@ -1,249 +1,126 @@
-#!/usr/bin/env bash
+# Defining essential directories
 
-FFMPEG_FALLBACK_VERSION=4.2.1
+# The root of the project
+export BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
+# Directory that contains source code for FFmpeg and its dependencies
+# Each library has its own subdirectory
+# Multiple versions of the same library can be stored inside librarie's directory
+export SOURCES_DIR=${BASE_DIR}/sources
+# Directory to place some statistics about the build.
+# Currently - the info about Text Relocations
+export STATS_DIR=${BASE_DIR}/stats
+# Directory that contains helper scripts and
+# scripts to download and build FFmpeg and each dependency separated by subdirectories
+export SCRIPTS_DIR=${BASE_DIR}/scripts
+# The directory to use by Android project
+# All FFmpeg's libraries and headers are copied there
+export OUTPUT_DIR=${BASE_DIR}/output
 
-# Defining a toolchain directory's name according to the current OS.
-# Assume that proper version of NDK is installed.
-case "$OSTYPE" in
-  darwin*)  HOST_TAG="darwin-x86_64" ;;
-  linux*)   HOST_TAG="linux-x86_64" ;;
-  msys)
-    case "$(uname -m)" in
-      x86_64) HOST_TAG="windows-x86_64" ;;
-      i686)   HOST_TAG="windows" ;;
-    esac
-  ;;
-esac
-
-if [[ $OSTYPE == "darwin"* ]]; then
-  NPROC=$(sysctl -n hw.physicalcpu)
-else
-  NPROC=$(nproc)
-fi
-
-# Directories used by the script
-BASE_DIR="$( cd "$( dirname "$0" )" && pwd )"
-SOURCES_DIR=${BASE_DIR}/sources
-OUTPUT_DIR=${BASE_DIR}/output
+# Directory to use as a place to build/install FFmpeg and its dependencies
 BUILD_DIR=${BASE_DIR}/build
-STATS_DIR=${BASE_DIR}/stats
+# Separate directory to build FFmpeg to
+export BUILD_DIR_FFMPEG=$BUILD_DIR/ffmpeg
+# All external libraries are installed to a single root
+# to make easier referencing them when FFmpeg is being built.
+export BUILD_DIR_EXTERNAL=$BUILD_DIR/external
+# Forcing FFmpeg and its dependencies to look for dependencies
+# in a specific directory when pkg-config is used
+export PKG_CONFIG_LIBDIR=${BUILD_DIR_EXTERNAL}/lib/pkgconfig
 
-# No incremental compilation here. Just drop what was built previously
-rm -rf ${BUILD_DIR}
-rm -rf ${STATS_DIR}
-rm -rf ${OUTPUT_DIR}
-mkdir -p ${STATS_DIR}
-mkdir -p ${OUTPUT_DIR}
-# Note: the 'source' folder wasn't actually deleted, just ensure it exists
-mkdir -p ${SOURCES_DIR}
+# Function that copies *.so files and headers of the current ANDROID_ABI
+# to the proper place inside OUTPUT_DIR
+function prepareOutput() {
+  OUTPUT_LIB=${OUTPUT_DIR}/lib/${ANDROID_ABI}
+  mkdir -p ${OUTPUT_LIB}
+  cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB}
 
-# Utility function
-# Getting sources of a particular ffmpeg release.
-# Same argument (ffmpeg version) produces the same source set.
-function ensureSourcesTag() {
-  FFMPEG_VERSION=$1
-
-  FFMPEG_SOURCES=${SOURCES_DIR}/ffmpeg-${FFMPEG_VERSION}
-
-  if [[ ! -d "$FFMPEG_SOURCES" ]]; then
-    TARGET_FILE_NAME=ffmpeg-${FFMPEG_VERSION}.tar.bz2
-    TARGET_FILE_PATH=${SOURCES_DIR}/${TARGET_FILE_NAME}
-
-    curl https://www.ffmpeg.org/releases/${TARGET_FILE_NAME} --output ${TARGET_FILE_PATH}
-    tar xvjf ${TARGET_FILE_PATH} -C ${SOURCES_DIR}
-    rm ${TARGET_FILE_PATH}
-  fi
+  OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ANDROID_ABI}
+  mkdir -p ${OUTPUT_HEADERS}
+  cp -r ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/include/* ${OUTPUT_HEADERS}
 }
 
-# Utility function
-# Getting sources of a particular branch of ffmpeg's git repository.
-# Same argument (branch name) may produce different source set,
-# as the branch in origin repository may be updated in future.
-function ensureSourcesBranch() {
-  BRANCH=$1
-
-  GIT_DIRECTORY=ffmpeg-git
-
-  FFMPEG_SOURCES=${SOURCES_DIR}/${GIT_DIRECTORY}
-
-  cd ${SOURCES_DIR}
-
-  if [[ ! -d "$FFMPEG_SOURCES" ]]; then
-    git clone https://git.ffmpeg.org/ffmpeg.git ${GIT_DIRECTORY}
-  fi
-
-  cd ${GIT_DIRECTORY}
-  git checkout $BRANCH
-  # Forcing the update of a branch
-  git pull origin $BRANCH
-
-  # Additional logging to keep track of an exact commit to build
-  echo "Commit to build:"
-  git rev-parse HEAD
-
-  cd ${BASE_DIR}
-}
-
-# Utility function
-# Test if sources of the FFmpeg exist. If not - download them
-function ensureSources() {
-  TYPE=$1
-  SECOND_ARGUMENT=$2
-
-  case $TYPE in
-  	tag)
-      echo "Using FFmpeg ${SECOND_ARGUMENT}"
-  		ensureSourcesTag ${SECOND_ARGUMENT}
-  		;;
-  	branch)
-      echo "Using FFmpeg git repository and its branch ${SECOND_ARGUMENT}"
-  		ensureSourcesBranch ${SECOND_ARGUMENT}
-  		;;
-  	*)
-  		echo "Using FFmpeg ${FFMPEG_FALLBACK_VERSION}"
-      ensureSourcesTag ${FFMPEG_FALLBACK_VERSION}
-  		;;
-  esac
-}
-
-# Actual magic of configuring and compiling of FFmpeg for a certain ABIs.
-# Supported ABIs are: armeabi-v7a, arm64-v8a, x86 and x86_64
-function assemble() {
-  cd ${FFMPEG_SOURCES}
-
-  ABI=$1
-  API_LEVEL=$2
-
-  TOOLCHAIN_PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_TAG}
-  SYSROOT=${TOOLCHAIN_PATH}/sysroot
-
-  TARGET_TRIPLE_MACHINE_BINUTILS=
-  TARGET_TRIPLE_MACHINE_CC=
-  TARGET_TRIPLE_OS="android"
-
-  case $ABI in
-  	armeabi-v7a)
-      #cc       armv7a-linux-androideabi16-clang
-      #binutils arm   -linux-androideabi  -ld
-      TARGET_TRIPLE_MACHINE_BINUTILS=arm
-      TARGET_TRIPLE_MACHINE_CC=armv7a
-      TARGET_TRIPLE_OS=androideabi
-
-      EXTRA_BUILD_CONFIGURATION_FLAGS=--enable-thumb
-  		;;
-    arm64-v8a)
-      #cc       aarch64-linux-android21-clang
-      #binutils aarch64-linux-android  -ld
-      TARGET_TRIPLE_MACHINE_BINUTILS=aarch64
-  		;;
-    x86)
-      #cc       i686-linux-android16-clang
-      #binutils i686-linux-android  -ld
-      TARGET_TRIPLE_MACHINE_BINUTILS=i686
-
-      # Disabling assembler optimizations, because they have text relocations
-      EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
-  		;;
-    x86_64)
-      #cc       x86_64-linux-android21-clang
-      #binutils x86_64-linux-android  -ld
-      TARGET_TRIPLE_MACHINE_BINUTILS=x86_64
-
-      EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${TOOLCHAIN_PATH}/bin/yasm
-  		;;
-  esac
-
-  # If the cc-specific variable isn't set, we fallback to binutils version
-  [ -z "${TARGET_TRIPLE_MACHINE_CC}" ] && TARGET_TRIPLE_MACHINE_CC=${TARGET_TRIPLE_MACHINE_BINUTILS}
-
-  # Common prefix for ld, as, etc.
-  CROSS_PREFIX=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
-
-  # The name for compiler is slightly different, so it is defined separatly.
-  CC=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${API_LEVEL}-clang
-
-  # Everything that goes below ${EXTRA_BUILD_CONFIGURATION_FLAGS} is my project-specific.
-  # You are free to enable/disable whatever you actually need.
-  ./configure \
-    --prefix=${BUILD_DIR}/${ABI} \
-    --enable-cross-compile \
-    --target-os=android \
-    --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
-    --sysroot=${SYSROOT} \
-    --cross-prefix=${CROSS_PREFIX} \
-    --cc=${CC} \
-    --extra-cflags="-O3 -fPIC" \
-    --enable-shared \
-    --disable-static \
-    ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
-    --disable-runtime-cpudetect \
-    --disable-programs \
-    --disable-muxers \
-    --disable-encoders \
-    --disable-avdevice \
-    --disable-postproc \
-    --disable-swresample \
-    --disable-avfilter \
-    --disable-doc \
-    --disable-debug \
-    --disable-pthreads \
-    --disable-network \
-    --disable-bsfs
-
-  make clean
-  make -j${NPROC}
-  make install
-
-  # Saving stats about text relocation presence.
-  # If the result file doesn't have 'TEXTREL' at all, then we are good.
+# Saving stats about text relocation presence.
+# If the result file doesn't have 'TEXTREL' at all, then we are good.
+# Otherwise the whole script is interrupted
+function checkTextRelocations() {
   TEXT_REL_STATS_FILE=${STATS_DIR}/text-relocations.txt
-  ${CROSS_PREFIX}readelf --dynamic ${BUILD_DIR}/${ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE}
+  ${READELF} --dynamic ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE}
 
   if grep -q TEXTREL ${TEXT_REL_STATS_FILE}; then
     echo "There are text relocations in output files:"
     cat ${TEXT_REL_STATS_FILE}
     exit 1
   fi
+}
 
+# Actual work of the script
+
+# Clearing previously created binaries
+rm -rf ${BUILD_DIR}
+rm -rf ${STATS_DIR}
+rm -rf ${OUTPUT_DIR}
+mkdir -p ${STATS_DIR}
+mkdir -p ${OUTPUT_DIR}
+
+# Exporting more necessary variabls
+source ${SCRIPTS_DIR}/export-host-variables.sh
+source ${SCRIPTS_DIR}/parse-arguments.sh
+
+# Treating FFmpeg as just a module to build after its dependencies
+COMPONENTS_TO_BUILD=${EXTERNAL_LIBRARIES[@]}
+COMPONENTS_TO_BUILD+=( "ffmpeg" )
+
+# Get the source code of component to build
+for COMPONENT in ${COMPONENTS_TO_BUILD[@]}
+do
+  echo "Getting source code of the component: ${COMPONENT}"
+  SOURCE_DIR_FOR_COMPONENT=${SOURCES_DIR}/${COMPONENT}
+
+  mkdir -p ${SOURCE_DIR_FOR_COMPONENT}
+  cd ${SOURCE_DIR_FOR_COMPONENT}
+
+  # Executing the component-specific script for downloading the source code
+  source ${SCRIPTS_DIR}/${COMPONENT}/download.sh
+
+  # The download.sh script has to export SOURCES_DIR_$COMPONENT variable
+  # with actual path of the source code. This is done for possiblity to switch
+  # between different verions of a component.
+  # If it isn't set, consider SOURCE_DIR_FOR_COMPONENT as the proper value
+  COMPONENT_SOURCES_DIR_VARIABLE=SOURCES_DIR_${COMPONENT}
+  if [[ -z "${!COMPONENT_SOURCES_DIR_VARIABLE}" ]]; then
+     export SOURCES_DIR_${COMPONENT}=${SOURCE_DIR_FOR_COMPONENT}
+  fi
+
+  # Returning to the rood directory. Just in case.
   cd ${BASE_DIR}
-}
+done
 
-# Placing build *.so files into the /bin directory
-function installLibs() {
-  BUILD_SUBDIR=$1
+# ABIs to build FFmpeg for.
+# x86 is the first, because it is likely to have Text Relocations.
+# In this case the rest ABIs will not be assembled at all.
+ABIS_TO_BUILD=( "x86" "x86_64" "armeabi-v7a" "arm64-v8a" )
 
-  OUTPUT_SUBDIR=${OUTPUT_DIR}/lib/${BUILD_SUBDIR}
-  CP_DIR=${BUILD_DIR}/${BUILD_SUBDIR}
+for ABI in ${ABIS_TO_BUILD[@]}
+do
+  # Exporting variables for the current ABI
+  source ${SCRIPTS_DIR}/export-build-variables.sh ${ABI}
 
-  mkdir -p ${OUTPUT_SUBDIR}
-  cp ${CP_DIR}/lib/*.so ${OUTPUT_SUBDIR}
-}
+  for COMPONENT in ${COMPONENTS_TO_BUILD[@]}
+  do
+    echo "Building the component: ${COMPONENT}"
+    COMPONENT_SOURCES_DIR_VARIABLE=SOURCES_DIR_${COMPONENT}
 
-function build() {
-  ABI=$1
-  ANDROID_API=$2
+    # Going to the actual source code directory of the current component
+    cd ${!COMPONENT_SOURCES_DIR_VARIABLE}
 
-  assemble ${ABI} ${ANDROID_API}
-  installLibs ${ABI}
-}
+    # and executing the component-specific build script
+    ${SCRIPTS_DIR}/${COMPONENT}/build.sh
 
-# Placing build header files into the /bin directory.
-# Note, there is a only one such a folder since this headers are the same for all ABIs.
-# May not be true for different configurations though.
-function installHeaders() {
-  cd ${BUILD_DIR}
-  cd "$(ls -1 | head -n1)"
-  cp -r include ${OUTPUT_DIR}
-  cd ${BASE_DIR}
-}
+    # Returning to the root directory. Just in case.
+    cd ${BASE_DIR}
+  done
 
-# Actual work
+  checkTextRelocations
 
-ensureSources $1 $2
-
-build armeabi-v7a 16
-build arm64-v8a 21
-build x86 16
-build x86_64 21
-
-installHeaders
+  prepareOutput
+done

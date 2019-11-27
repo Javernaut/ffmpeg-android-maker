@@ -5,15 +5,15 @@ function max() {
 export ANDROID_ABI=$1
 
 if [ $ANDROID_ABI = "arm64-v8a" ] || [ $ANDROID_ABI = "x86_64" ] ; then
+  # For 64bit we use value not less than 21
   export ANDROID_PLATFORM=$(max ${DESIRED_ANDROID_API_LEVEL} 21)
 else
   export ANDROID_PLATFORM=${DESIRED_ANDROID_API_LEVEL}
 fi
 
 export TOOLCHAIN_PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_TAG}
-export SYSROOT=${TOOLCHAIN_PATH}/sysroot
+export SYSROOT_PATH=${TOOLCHAIN_PATH}/sysroot
 
-export TARGET_TRIPLE_MACHINE_BINUTILS=
 TARGET_TRIPLE_MACHINE_CC=
 export TARGET_TRIPLE_OS="android"
 
@@ -47,9 +47,32 @@ esac
 export TARGET_TRIPLE_MACHINE_CC=$TARGET_TRIPLE_MACHINE_CC
 
 # Common prefix for ld, as, etc.
-export CROSS_PREFIX=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
+export CROSS_PREFIX=${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
+export CROSS_PREFIX_WITH_PATH=${TOOLCHAIN_PATH}/bin/${CROSS_PREFIX}
+
+# Exporting Binutils paths, if passing just CROSS_PREFIX_WITH_PATH is not enough
+export ADDR2LINE=${CROSS_PREFIX_WITH_PATH}addr2line
+export        AR=${CROSS_PREFIX_WITH_PATH}ar
+export        AS=${CROSS_PREFIX_WITH_PATH}as
+export       DWP=${CROSS_PREFIX_WITH_PATH}dwp
+export   ELFEDIT=${CROSS_PREFIX_WITH_PATH}elfedit
+export     GPROF=${CROSS_PREFIX_WITH_PATH}gprof
+export        LD=${CROSS_PREFIX_WITH_PATH}ld
+export        NM=${CROSS_PREFIX_WITH_PATH}nm
+export   OBJCOPY=${CROSS_PREFIX_WITH_PATH}objcopy
+export   OBJDUMP=${CROSS_PREFIX_WITH_PATH}objdump
+export    RANLIB=${CROSS_PREFIX_WITH_PATH}ranlib
+export   READELF=${CROSS_PREFIX_WITH_PATH}readelf
+export      SIZE=${CROSS_PREFIX_WITH_PATH}size
+export   STRINGS=${CROSS_PREFIX_WITH_PATH}strings
+export     STRIP=${CROSS_PREFIX_WITH_PATH}strip
 
 # The name for compiler is slightly different, so it is defined separatly.
 export CC=${TOOLCHAIN_PATH}/bin/${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${ANDROID_PLATFORM}-clang
+export CXX=${CC}++
+# TODO consider abondaning this strategy of defining the name of the clang wrapper
+# in favour of just passing -mstackrealign and -fno-addrsig depending on
+# ANDROID_ABI and NDK's version
 
-export PKG_CONFIG_LIBDIR=/Users/javernaut/Development/FFmpeg/AOM/aom_build/output/lib/pkgconfig
+# Special variable for the yasm assembler
+export YASM=${TOOLCHAIN_PATH}/bin/yasm

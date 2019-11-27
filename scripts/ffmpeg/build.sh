@@ -7,25 +7,32 @@ case $ANDROID_ABI in
     EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
     ;;
   x86_64)
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${TOOLCHAIN_PATH}/bin/yasm
+    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${YASM}
     ;;
 esac
+
+# Preparing flags for enabling requested libraries
+ADDITIONAL_COMPONENTS=
+for LIBARY_NAME in ${EXTERNAL_LIBRARIES[@]}
+do
+  ADDITIONAL_COMPONENTS+=" --enable-$LIBARY_NAME"
+done
 
 # Everything that goes below ${EXTRA_BUILD_CONFIGURATION_FLAGS} is my project-specific.
 # You are free to enable/disable whatever you actually need.
 
-# Path for prefix should come as a single argument from ffmpeg-android-maker istself
 ./configure \
   --prefix=${BUILD_DIR_FFMPEG}/${ANDROID_ABI} \
   --enable-cross-compile \
   --target-os=android \
   --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
-  --sysroot=${SYSROOT} \
-  --cross-prefix=${CROSS_PREFIX} \
+  --sysroot=${SYSROOT_PATH} \
+  --cross-prefix=${CROSS_PREFIX_WITH_PATH} \
   --cc=${CC} \
   --extra-cflags="-O3 -fPIC" \
   --enable-shared \
   --disable-static \
+  --pkg-config=$(which pkg-config) \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
   --disable-runtime-cpudetect \
   --disable-programs \
@@ -40,9 +47,7 @@ esac
   --disable-pthreads \
   --disable-network \
   --disable-bsfs \
-  --pkg-config=$(which pkg-config)
-
-  # Add --enable-xxx flags here
+  $ADDITIONAL_COMPONENTS
 
 make clean
 make -j${HOST_NPROC}
