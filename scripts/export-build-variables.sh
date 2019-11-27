@@ -5,9 +5,9 @@ function max() {
 export ANDROID_ABI=$1
 
 if [ $ANDROID_ABI = "arm64-v8a" ] || [ $ANDROID_ABI = "x86_64" ] ; then
-  export ANDROID_PLATFORM=$(max ${MIN_SDK_ARG} 21)
+  export ANDROID_PLATFORM=$(max ${DESIRED_ANDROID_API_LEVEL} 21)
 else
-  export ANDROID_PLATFORM=${MIN_SDK_ARG}
+  export ANDROID_PLATFORM=${DESIRED_ANDROID_API_LEVEL}
 fi
 
 export TOOLCHAIN_PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_TAG}
