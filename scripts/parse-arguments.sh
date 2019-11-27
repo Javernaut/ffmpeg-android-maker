@@ -35,10 +35,10 @@ do
       shift
     ;;
     # Arguments below enable certain external libraries to build into FFmpeg
-    # --enable-libaom)
-    #   EXTERNAL_LIBRARIES+=( "libaom" )
-    #   shift
-    # ;;
+    --enable-libaom)
+      EXTERNAL_LIBRARIES+=( "libaom" )
+      shift
+    ;;
     # --enable-libdav1d)
     #   EXTERNAL_LIBRARIES+=( "libdav1d" )
     #   shift
