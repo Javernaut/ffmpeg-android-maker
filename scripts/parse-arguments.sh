@@ -35,18 +35,18 @@ do
       shift
     ;;
     # Arguments below enable certain external libraries to build into FFmpeg
-    --enable-libaom)
-      EXTERNAL_LIBRARIES+=( "libaom" )
-      shift
-    ;;
-    --enable-libdav1d)
-      EXTERNAL_LIBRARIES+=( "libdav1d" )
-      shift
-    ;;
-    --enable-libmp3lame)
-      EXTERNAL_LIBRARIES+=( "libmp3lame" )
-      shift
-    ;;
+    # --enable-libaom)
+    #   EXTERNAL_LIBRARIES+=( "libaom" )
+    #   shift
+    # ;;
+    # --enable-libdav1d)
+    #   EXTERNAL_LIBRARIES+=( "libdav1d" )
+    #   shift
+    # ;;
+    # --enable-libmp3lame)
+    #   EXTERNAL_LIBRARIES+=( "libmp3lame" )
+    #   shift
+    # ;;
     *)
       echo "Unknown argument $artument"
     ;;

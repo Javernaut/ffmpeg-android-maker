@@ -1,31 +1,24 @@
-# Expecting FFMPEG_SOURCE_TYPE and FFMPEG_SOURCE_VALUE variables
+# Script to download FFmpeg's source code
+# Relies on FFMPEG_SOURCE_TYPE and FFMPEG_SOURCE_VALUE variables
+# to choose the valid origin and version
 
-# Think of that names
-
-# Expecting ENSURE_SOURCE_DIR - where source code has to be downloaded
-# Exports SOURCES_DIR_FFMPEG - path where actual sources are stored
-
-echo "Downloading sources for FFmpeg"
-
-echo ${FFMPEG_SOURCE_TYPE}
-echo ${FFMPEG_SOURCE_VALUE}
+# Exports SOURCES_DIR_ffmpeg - path where actual sources are stored
 
 # Utility function
-# Getting sources of a particular ffmpeg release.
-# Same argument (ffmpeg version) produces the same source set.
+# Getting sources of a particular FFmpeg release.
+# Same argument (FFmpeg version) produces the same source set.
 function ensureSourcesTar() {
-  FFMPEG_SOURCES=${ENSURE_SOURCE_DIR}/ffmpeg-${FFMPEG_SOURCE_VALUE}
+  FFMPEG_SOURCES=ffmpeg-${FFMPEG_SOURCE_VALUE}
 
   if [[ ! -d "$FFMPEG_SOURCES" ]]; then
     TARGET_FILE_NAME=ffmpeg-${FFMPEG_SOURCE_VALUE}.tar.bz2
-    TARGET_FILE_PATH=${ENSURE_SOURCE_DIR}/${TARGET_FILE_NAME}
 
-    curl https://www.ffmpeg.org/releases/${TARGET_FILE_NAME} --output ${TARGET_FILE_PATH}
-    tar xzf ${TARGET_FILE_PATH} -C ${ENSURE_SOURCE_DIR}
-    rm ${TARGET_FILE_PATH}
+    curl https://www.ffmpeg.org/releases/${TARGET_FILE_NAME} --output ${TARGET_FILE_NAME}
+    tar xzf ${TARGET_FILE_NAME} -C .
+    rm ${TARGET_FILE_NAME}
   fi
 
-  export SOURCES_DIR_ffmpeg=$FFMPEG_SOURCES
+  export SOURCES_DIR_ffmpeg=$(pwd)/${FFMPEG_SOURCES}
 }
 
 # Utility function
