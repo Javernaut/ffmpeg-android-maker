@@ -1,5 +1,7 @@
-source scripts/parse-arguments.sh
+source scripts/export-core-variables.sh
 source scripts/export-host-variables.sh
+source scripts/parse-arguments.sh
+
 
 function prepareOutput() {
   OUTPUT_LIB=${OUTPUT_DIR}/lib/${ANDROID_ABI}
