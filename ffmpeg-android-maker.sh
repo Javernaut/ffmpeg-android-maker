@@ -23,9 +23,6 @@ export BUILD_DIR_FFMPEG=$BUILD_DIR/ffmpeg
 # All external libraries are installed to a single root
 # to make easier referencing them when FFmpeg is being built.
 export BUILD_DIR_EXTERNAL=$BUILD_DIR/external
-# Forcing FFmpeg and its dependencies to look for dependencies
-# in a specific directory when pkg-config is used
-export PKG_CONFIG_LIBDIR=${BUILD_DIR_EXTERNAL}/lib/pkgconfig
 
 # Function that copies *.so files and headers of the current ANDROID_ABI
 # to the proper place inside OUTPUT_DIR

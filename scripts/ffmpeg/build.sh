@@ -13,7 +13,7 @@ esac
 
 # Preparing flags for enabling requested libraries
 ADDITIONAL_COMPONENTS=
-for LIBARY_NAME in ${EXTERNAL_LIBRARIES[@]}
+for LIBARY_NAME in ${FFMPEG_EXTERNAL_LIBRARIES[@]}
 do
   ADDITIONAL_COMPONENTS+=" --enable-$LIBARY_NAME"
 done
