@@ -1,5 +1,5 @@
 ./configure \
-    --prefix=${BUILD_DIR_EXTERNAL}/${ANDROID_ABI} \
+    --prefix=${INSTALL_DIR} \
     --target=${TARGET} \
     --host=${TARGET} \
     --with-sysroot=${SYSROOT_PATH} \
@@ -10,10 +10,10 @@
     --disable-decoder \
     --disable-gtktest \
     --disable-frontend \
-    CC=${CC} \
-    LD=${LD} \
-    AR=${AR} \
-    RANLIB=${RANLIB}
+    CC=${FAM_CC} \
+    LD=${FAM_LD} \
+    AR=${FAM_AR} \
+    RANLIB=${FAM_RANLIB}
 
 export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lmp3lame"
 

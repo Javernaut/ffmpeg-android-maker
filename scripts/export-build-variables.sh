@@ -15,6 +15,7 @@ export TOOLCHAIN_PATH=${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/${HOST_TAG}
 export SYSROOT_PATH=${TOOLCHAIN_PATH}/sysroot
 
 TARGET_TRIPLE_MACHINE_CC=
+CPU_FAMILY=
 export TARGET_TRIPLE_OS="android"
 
 case $ANDROID_ABI in
@@ -34,6 +35,7 @@ case $ANDROID_ABI in
     #cc       i686-linux-android16-clang
     #binutils i686-linux-android  -ld
     export TARGET_TRIPLE_MACHINE_BINUTILS=i686
+    CPU_FAMILY=x86
     ;;
   x86_64)
     #cc       x86_64-linux-android21-clang
@@ -46,37 +48,42 @@ esac
 [ -z "${TARGET_TRIPLE_MACHINE_CC}" ] && TARGET_TRIPLE_MACHINE_CC=${TARGET_TRIPLE_MACHINE_BINUTILS}
 export TARGET_TRIPLE_MACHINE_CC=$TARGET_TRIPLE_MACHINE_CC
 
+[ -z "${CPU_FAMILY}" ] && CPU_FAMILY=${TARGET_TRIPLE_MACHINE_BINUTILS}
+export CPU_FAMILY=$CPU_FAMILY
+
 # Common prefix for ld, as, etc.
 export CROSS_PREFIX=${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
 export CROSS_PREFIX_WITH_PATH=${TOOLCHAIN_PATH}/bin/${CROSS_PREFIX}
 
 # Exporting Binutils paths, if passing just CROSS_PREFIX_WITH_PATH is not enough
-export ADDR2LINE=${CROSS_PREFIX_WITH_PATH}addr2line
-export        AR=${CROSS_PREFIX_WITH_PATH}ar
-export        AS=${CROSS_PREFIX_WITH_PATH}as
-export       DWP=${CROSS_PREFIX_WITH_PATH}dwp
-export   ELFEDIT=${CROSS_PREFIX_WITH_PATH}elfedit
-export     GPROF=${CROSS_PREFIX_WITH_PATH}gprof
-export        LD=${CROSS_PREFIX_WITH_PATH}ld
-export        NM=${CROSS_PREFIX_WITH_PATH}nm
-export   OBJCOPY=${CROSS_PREFIX_WITH_PATH}objcopy
-export   OBJDUMP=${CROSS_PREFIX_WITH_PATH}objdump
-export    RANLIB=${CROSS_PREFIX_WITH_PATH}ranlib
-export   READELF=${CROSS_PREFIX_WITH_PATH}readelf
-export      SIZE=${CROSS_PREFIX_WITH_PATH}size
-export   STRINGS=${CROSS_PREFIX_WITH_PATH}strings
-export     STRIP=${CROSS_PREFIX_WITH_PATH}strip
+export FAM_ADDR2LINE=${CROSS_PREFIX_WITH_PATH}addr2line
+export        FAM_AR=${CROSS_PREFIX_WITH_PATH}ar
+export        FAM_AS=${CROSS_PREFIX_WITH_PATH}as
+export       FAM_DWP=${CROSS_PREFIX_WITH_PATH}dwp
+export   FAM_ELFEDIT=${CROSS_PREFIX_WITH_PATH}elfedit
+export     FAM_GPROF=${CROSS_PREFIX_WITH_PATH}gprof
+export        FAM_LD=${CROSS_PREFIX_WITH_PATH}ld
+export        FAM_NM=${CROSS_PREFIX_WITH_PATH}nm
+export   FAM_OBJCOPY=${CROSS_PREFIX_WITH_PATH}objcopy
+export   FAM_OBJDUMP=${CROSS_PREFIX_WITH_PATH}objdump
+export    FAM_RANLIB=${CROSS_PREFIX_WITH_PATH}ranlib
+export   FAM_READELF=${CROSS_PREFIX_WITH_PATH}readelf
+export      FAM_SIZE=${CROSS_PREFIX_WITH_PATH}size
+export   FAM_STRINGS=${CROSS_PREFIX_WITH_PATH}strings
+export     FAM_STRIP=${CROSS_PREFIX_WITH_PATH}strip
 
 export TARGET=${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${ANDROID_PLATFORM}
 # The name for compiler is slightly different, so it is defined separatly.
-export CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
-export CXX=${CC}++
+export FAM_CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
+export FAM_CXX=${FAM_CC}++
 # TODO consider abondaning this strategy of defining the name of the clang wrapper
 # in favour of just passing -mstackrealign and -fno-addrsig depending on
 # ANDROID_ABI and NDK's version
 
 # Special variable for the yasm assembler
-export YASM=${TOOLCHAIN_PATH}/bin/yasm
+export FAM_YASM=${TOOLCHAIN_PATH}/bin/yasm
 
 # A variable to which certain dependencies can add -l arguments during build.sh
 export FFMPEG_EXTRA_LD_FLAGS=
+
+export INSTALL_DIR=${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}

@@ -6,7 +6,7 @@
 
 echo "Using aom master branch"
 AOM_SOURCES=aom
-if [[ ! -d "$LAME_SOURCES" ]]; then
+if [[ ! -d "$AOM_SOURCES" ]]; then
   git clone https://aomedia.googlesource.com/aom
 fi
 

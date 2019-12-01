@@ -7,7 +7,7 @@ case $ANDROID_ABI in
     EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
     ;;
   x86_64)
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${YASM}
+    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${FAM_YASM}
     ;;
 esac
 
@@ -32,7 +32,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
   --sysroot=${SYSROOT_PATH} \
   --cross-prefix=${CROSS_PREFIX_WITH_PATH} \
-  --cc=${CC} \
+  --cc=${FAM_CC} \
   --extra-cflags="-O3 -fPIC $DEP_CFLAGS" \
   --extra-ldflags="$DEP_LD_FLAGS" \
   --enable-shared \
