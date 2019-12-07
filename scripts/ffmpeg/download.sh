@@ -4,7 +4,6 @@
 
 # Exports SOURCES_DIR_ffmpeg - path where actual sources are stored
 
-# Utility function
 # Getting sources of a particular FFmpeg release.
 # Same argument (FFmpeg version) produces the same source set.
 function ensureSourcesTar() {
@@ -21,46 +20,49 @@ function ensureSourcesTar() {
   export SOURCES_DIR_ffmpeg=$(pwd)/${FFMPEG_SOURCES}
 }
 
-# Utility function
-# Getting sources of a particular branch of ffmpeg's git repository.
-# Same argument (branch name) may produce different source set,
+# Getting sources of a particular branch or a tag of FFmpeg's git repository.
+# Same branch name may produce different source set,
 # as the branch in origin repository may be updated in future.
-# function ensureSourcesBranch() {
-#   BRANCH=$1
-#
-#   GIT_DIRECTORY=ffmpeg-git
-#
-#   FFMPEG_SOURCES=${SOURCES_DIR}/${GIT_DIRECTORY}
-#
-#   cd ${SOURCES_DIR}
-#
-#   if [[ ! -d "$FFMPEG_SOURCES" ]]; then
-#     git clone https://git.ffmpeg.org/ffmpeg.git ${GIT_DIRECTORY}
-#   fi
-#
-#   cd ${GIT_DIRECTORY}
-#   git checkout $BRANCH
-#   # Forcing the update of a branch
-#   git pull origin $BRANCH
-#
-#   # Additional logging to keep track of an exact commit to build
-#   echo "Commit to build:"
-#   git rev-parse HEAD
-#
-#   cd ${BASE_DIR}
-# }
+# Git tags lead to stable states of the source code.
+function ensureSourcesGit() {
+  NAME_TO_CHECKOUT=${FFMPEG_SOURCE_VALUE}
 
+  GIT_DIRECTORY=ffmpeg-git
+
+  FFMPEG_SOURCES=$(pwd)/${GIT_DIRECTORY}
+
+  if [[ ! -d "$FFMPEG_SOURCES" ]]; then
+    git clone https://git.ffmpeg.org/ffmpeg.git ${GIT_DIRECTORY}
+  fi
+
+  cd ${GIT_DIRECTORY}
+  git reset --hard
+
+  git checkout $NAME_TO_CHECKOUT
+  if [ ${FFMPEG_SOURCE_TYPE} = "GIT_BRANCH" ]; then
+    # Forcing the update of a branch
+    git pull origin $BRANCH
+  fi
+
+  # Additional logging to keep track of an exact commit to build
+  echo "Commit to build:"
+  git rev-parse HEAD
+
+  export SOURCES_DIR_ffmpeg=${FFMPEG_SOURCES}
+}
+
+# Actual code
 case ${FFMPEG_SOURCE_TYPE} in
-	# GIT_TAG)
-  #   echo "Using FFmpeg ${SECOND_ARGUMENT}"
-	# 	ensureSourcesTag ${SECOND_ARGUMENT}
-	# 	;;
-	# GIT_BRANCH)
-  #   echo "Using FFmpeg git repository and its branch ${SECOND_ARGUMENT}"
-	# 	ensureSourcesBranch ${SECOND_ARGUMENT}
-	# 	;;
+	GIT_TAG)
+    echo "Using FFmpeg git tag: ${FFMPEG_SOURCE_VALUE}"
+		ensureSourcesGit
+		;;
+	GIT_BRANCH)
+    echo "Using FFmpeg git repository and its branch: ${FFMPEG_SOURCE_VALUE}"
+		ensureSourcesGit
+		;;
 	TAR)
-		echo "Using FFmpeg source archive ${FFMPEG_SOURCE_VALUE}"
+		echo "Using FFmpeg source archive: ${FFMPEG_SOURCE_VALUE}"
     ensureSourcesTar
 		;;
 esac

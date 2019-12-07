@@ -17,17 +17,17 @@ do
       shift
     ;;
     # Checkout the particular tag in the FFmpeg's git repository
-    # --source-git-tag=*)
-    #   SOURCE_TYPE=GIT_TAG
-    #   SOURCE_VALUE="${artument#*=}"
-    #   shift
-    # ;;
+    --source-git-tag=*)
+      SOURCE_TYPE=GIT_TAG
+      SOURCE_VALUE="${artument#*=}"
+      shift
+    ;;
     # Checkout the particular branch in the FFmpeg's git repository
-    # --source-git-branch=*)
-    #   SOURCE_TYPE=GIT_BRANCH
-    #   SOURCE_VALUE="${artument#*=}"
-    #   shift
-    # ;;
+    --source-git-branch=*)
+      SOURCE_TYPE=GIT_BRANCH
+      SOURCE_VALUE="${artument#*=}"
+      shift
+    ;;
     # Download the particular tar archive by its version
     --source-tar=*)
       SOURCE_TYPE=TAR
