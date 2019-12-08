@@ -27,5 +27,7 @@ export HOST_NPROC=$HOST_NPROC
 export CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.10.2.4988404/bin/cmake
 # Using Ninja from the Android SDK
 export NINJA_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.10.2.4988404/bin/ninja
-# Using host Make, because Android NDK's Make (before r21) doesn't work properly on MSYS2 in Windows
+# Using host Make, because Android NDK's Make (before r21) doesn't work properly in MSYS2 on Windows
 export MAKE_EXECUTABLE=make
+# Meson is used for libdav1d building
+export MESON_EXECUTABLE=meson

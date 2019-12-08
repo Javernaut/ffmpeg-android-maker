@@ -56,6 +56,7 @@ export CROSS_PREFIX=${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
 export CROSS_PREFIX_WITH_PATH=${TOOLCHAIN_PATH}/bin/${CROSS_PREFIX}
 
 # Exporting Binutils paths, if passing just CROSS_PREFIX_WITH_PATH is not enough
+# The FAM_ prefix is used to eliminate passing those values implicitly to build systems
 export FAM_ADDR2LINE=${CROSS_PREFIX_WITH_PATH}addr2line
 export        FAM_AR=${CROSS_PREFIX_WITH_PATH}ar
 export        FAM_AS=${CROSS_PREFIX_WITH_PATH}as
@@ -78,7 +79,7 @@ export FAM_CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
 export FAM_CXX=${FAM_CC}++
 # TODO consider abondaning this strategy of defining the name of the clang wrapper
 # in favour of just passing -mstackrealign and -fno-addrsig depending on
-# ANDROID_ABI and NDK's version
+# ANDROID_ABI, ANDROID_PLATFORM and NDK's version
 
 # Special variable for the yasm assembler
 export FAM_YASM=${TOOLCHAIN_PATH}/bin/yasm
