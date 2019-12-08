@@ -8,6 +8,7 @@ c = '${FAM_CC}'
 cpp = '${FAM_CXX}'
 ar = '${FAM_AR}'
 strip = '${FAM_STRIP}'
+nasm = '${NASM_EXECUTABLE}'
 objcopy = '${FAM_OBJCOPY}'
 pkgconfig = '$(which pkg-config)'
 
@@ -29,7 +30,7 @@ BUILD_DIRECTORY=build/${ANDROID_ABI}
 
 rm -rf ${BUILD_DIRECTORY}
 
-meson . ${BUILD_DIRECTORY} \
+${MESON_EXECUTABLE} . ${BUILD_DIRECTORY} \
   --cross-file ${CROSS_FILE_NAME} \
   --default-library=static \
   -Denable_asm=true \
@@ -40,5 +41,5 @@ meson . ${BUILD_DIRECTORY} \
 
 cd ${BUILD_DIRECTORY}
 
-${NINJA_EXECUTABLE}
+${NINJA_EXECUTABLE} -j ${HOST_NPROC}
 ${NINJA_EXECUTABLE} install
