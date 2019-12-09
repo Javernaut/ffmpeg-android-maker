@@ -26,4 +26,4 @@ install:
   # - sudo pip3 install meson
   # Installing the ndk and assembling the FFmpeg
 script:
-  - bash -e ffmpeg-android-maker.sh # --enable-libdav1d --enable-libmp3lame --enable-libaom
+  - bash -e ffmpeg-android-maker.sh --enable-libmp3lame --enable-libaom # --enable-libdav1d 
