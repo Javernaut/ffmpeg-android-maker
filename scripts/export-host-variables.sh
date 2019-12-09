@@ -25,10 +25,10 @@ export HOST_NPROC=$HOST_NPROC
 
 # Using CMake from the Android SDK
 export CMAKE_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.10.2.4988404/bin/cmake
-# Using Ninja from the Android SDK
-export NINJA_EXECUTABLE=${ANDROID_SDK_HOME}/cmake/3.10.2.4988404/bin/ninja
-# Using host Make, because Android NDK's Make (before r21) doesn't work properly in MSYS2 on Windows
+# Using Build machine's Make, because Android NDK's Make (before r21) doesn't work properly in MSYS2 on Windows
 export MAKE_EXECUTABLE=$(which make)
+# Using Build machine's Ninja. It is used for libdav1d building. Needs to be installed
+export NINJA_EXECUTABLE=$(which ninja)
 # Meson is used for libdav1d building. Needs to be installed
 export MESON_EXECUTABLE=$(which meson)
 # Nasm is used for libdav1d building. Needs to be installed
