@@ -5,9 +5,9 @@ install:
   - curl https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output $HOME/android-sdk.zip
   - unzip -qq $HOME/android-sdk.zip -d $HOME/android-sdk
   - export ANDROID_SDK_HOME=$HOME/android-sdk
-  - export ANDROID_NDK_HOME=$ANDROID_SDK_HOME/ndk-bundle
+  - export ANDROID_NDK_HOME=$ANDROID_SDK_HOME/ndk/20.1.5948944
   - function installAndroidComponent() { yes | ${ANDROID_SDK_HOME}/tools/bin/sdkmanager $1 > /dev/null; }
-  - installAndroidComponent "ndk-bundle"
+  - installAndroidComponent "ndk;20.1.5948944"
   - installAndroidComponent "patcher;v4"
   - installAndroidComponent "cmake;3.10.2.4988404"
   # Keeping track of the NDK version that was used
@@ -24,6 +24,5 @@ install:
   # - curl http://archive.ubuntu.com/ubuntu/pool/universe/n/ninja-build/ninja-build_1.5.1-0.1ubuntu1_amd64.deb --output ninja-build_1.5.1-0.1ubuntu1_amd64.deb
   # - sudo dpkg -i ninja-build_1.5.1-0.1ubuntu1_amd64.deb
   # - sudo pip3 install meson
-  # Installing the ndk and assembling the FFmpeg
 script:
-  - bash -e ffmpeg-android-maker.sh --enable-libmp3lame --enable-libaom # --enable-libdav1d 
+  - bash -e ffmpeg-android-maker.sh --enable-libmp3lame --enable-libaom # --enable-libdav1d
