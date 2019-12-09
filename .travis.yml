@@ -2,6 +2,8 @@ language: java
 jdk: openjdk8
 dist: xenial
 install:
+  - echo "pkg-config:"
+  - which pkg-config
   # Installing Android SDK
   - curl https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output $HOME/android-sdk.zip
   - unzip -qq $HOME/android-sdk.zip -d $HOME/android-sdk
