@@ -13,16 +13,12 @@ install:
   # Keeping track of the NDK version that was used
   - cat $ANDROID_NDK_HOME/source.properties
   # Installing meson for libdav1d building
+  - sudo apt-get install nasm python3-pip python3-setuptools python3-wheel ninja-build
+  - sudo pip3 install meson
+  - curl http://archive.ubuntu.com/ubuntu/pool/universe/n/nasm/nasm_2.13.02-0.1_amd64.deb --output nasm_2.13.02-0.1_amd64.deb
+  - sudo dpkg -i nasm_2.13.02-0.1_amd64.deb
   # - sudo apt-get update
   # - sudo apt-get upgrade
   # - sudo apt-get install dpkg
-  # - sudo apt-get install python3.5 python3-pip python3-setuptools python3-wheel ninja-build
-  # - sudo rm /usr/bin/python3
-  # - sudo ln -s /usr/bin/python3.5 /usr/bin/python3
-  # - curl http://archive.ubuntu.com/ubuntu/pool/universe/n/nasm/nasm_2.13.02-0.1_amd64.deb --output nasm_2.13.02-0.1_amd64.deb
-  # - sudo dpkg -i nasm_2.13.02-0.1_amd64.deb
-  # - curl http://archive.ubuntu.com/ubuntu/pool/universe/n/ninja-build/ninja-build_1.5.1-0.1ubuntu1_amd64.deb --output ninja-build_1.5.1-0.1ubuntu1_amd64.deb
-  # - sudo dpkg -i ninja-build_1.5.1-0.1ubuntu1_amd64.deb
-  # - sudo pip3 install meson
 script:
-  - bash -e ffmpeg-android-maker.sh --enable-libmp3lame --enable-libaom # --enable-libdav1d
+  - bash -e ffmpeg-android-maker.sh --enable-libdav1d --enable-libmp3lame --enable-libaom
