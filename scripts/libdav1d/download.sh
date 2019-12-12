@@ -2,7 +2,7 @@
 
 # Exports SOURCES_DIR_libdav1d - path where actual sources are stored
 
-DAV1D_VERSION=0.5.1
+DAV1D_VERSION=0.5.2
 echo "Using libdav1d $DAV1D_VERSION"
 DAV1D_SOURCES=dav1d-${DAV1D_VERSION}
 
