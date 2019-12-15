@@ -1,3 +1,4 @@
+#!/bin/bash
 # Defining essential directories
 
 # The root of the project
