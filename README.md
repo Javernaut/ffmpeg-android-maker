@@ -29,7 +29,9 @@ Actual Android app that uses the output of the script can be found [here](https:
 
 On **macOS** or **Linux** just execute the script in terminal.
 
-It is also possible to execute this script on a **Windows** machine with [MSYS2](https://www.msys2.org). You also need to install specific packages to it: *make*, *git*, *diffutils* and *tar*. The script supports both 32-bit and 64-bit versions of Windows. Also see Prerequisites section for necessary software.
+~~It is also possible to execute this script on a **Windows** machine with [MSYS2](https://www.msys2.org). You also need to install specific packages to it: *make*, *git*, *diffutils* and *tar*. The script supports both 32-bit and 64-bit versions of Windows. Also see Prerequisites section for necessary software.~~
+
+Since v2.0.0 the **Windows** support is temporary absent.
 
 ## Prerequisites
 
