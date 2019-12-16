@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 CROSS_FILE_NAME=crossfile-${ANDROID_ABI}.meson
 
 rm ${CROSS_FILE_NAME}

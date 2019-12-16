@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ./configure \
     --prefix=${INSTALL_DIR} \
     --target=${TARGET} \

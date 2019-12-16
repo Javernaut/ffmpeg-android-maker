@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Script to download Dav1d's source code
 
 # Exports SOURCES_DIR_libdav1d - path where actual sources are stored

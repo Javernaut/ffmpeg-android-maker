@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Script to download Lame's source code
 
 # Exports SOURCES_DIR_libmp3lame - path where actual sources are stored

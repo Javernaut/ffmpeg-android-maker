@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function max() {
   [ $1 -ge $2 ] && echo "$1" || echo "$2"
 }

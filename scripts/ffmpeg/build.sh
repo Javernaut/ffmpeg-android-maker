@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 case $ANDROID_ABI in
   armeabi-v7a)
     EXTRA_BUILD_CONFIGURATION_FLAGS=--enable-thumb

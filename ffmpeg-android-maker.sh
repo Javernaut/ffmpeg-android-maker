@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Defining essential directories
 
 # The root of the project

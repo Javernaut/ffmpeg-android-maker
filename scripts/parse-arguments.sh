@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # This script parses arguments that were passed to ffmpeg-android-maker.sh
 # and exports a bunch of varables that are used elsewhere.
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Script to download AV1 Codec Library's source code
 
 # Exports SOURCES_DIR_libaom - path where actual sources are stored

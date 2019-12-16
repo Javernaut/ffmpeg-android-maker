@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Script to download FFmpeg's source code
 # Relies on FFMPEG_SOURCE_TYPE and FFMPEG_SOURCE_VALUE variables
 # to choose the valid origin and version
