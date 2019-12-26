@@ -7,11 +7,9 @@ rm ${CROSS_FILE_NAME}
 cat > "${CROSS_FILE_NAME}" << EOF
 [binaries]
 c = '${FAM_CC}'
-cpp = '${FAM_CXX}'
 ar = '${FAM_AR}'
 strip = '${FAM_STRIP}'
 nasm = '${NASM_EXECUTABLE}'
-objcopy = '${FAM_OBJCOPY}'
 pkgconfig = '$(which pkg-config)'
 
 [properties]
