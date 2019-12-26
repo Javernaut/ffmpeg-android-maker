@@ -2,18 +2,16 @@
 
 ./configure \
     --prefix=${INSTALL_DIR} \
-    --target=${TARGET} \
     --host=${TARGET} \
     --with-sysroot=${SYSROOT_PATH} \
     --disable-shared \
     --enable-static \
     --with-pic \
+    --disable-fast-install \
     --disable-analyzer-hooks \
-    --disable-decoder \
     --disable-gtktest \
     --disable-frontend \
     CC=${FAM_CC} \
-    LD=${FAM_LD} \
     AR=${FAM_AR} \
     RANLIB=${FAM_RANLIB}
 
