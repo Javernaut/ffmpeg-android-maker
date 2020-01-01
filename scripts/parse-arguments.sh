@@ -7,7 +7,7 @@
 # See the end of this file for more description
 EXTERNAL_LIBRARIES=()
 SOURCE_TYPE=TAR
-SOURCE_VALUE=4.2.1
+SOURCE_VALUE=4.2.2
 API_LEVEL=16
 
 for artument in "$@"
