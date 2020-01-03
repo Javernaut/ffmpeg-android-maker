@@ -45,7 +45,7 @@ For **libdav1d** building you also need to install *ninja* and *meson* tools.
 
 ## Features
 
-**Add and arbitrary external library that FFMpeg supports to the building process**. Just specify how the source code needs to be downloaded and how to perform the build operation. More about this is [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/External-libraries-integration).
+**Add an arbitrary external library that FFMpeg supports to the building process**. Just specify how the source code needs to be downloaded and how to perform the build operation. More about this is [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/External-libraries-integration).
 
 **Setting your own FFmpeg version and origin**. You can actually override the version of FFmpeg used by the script. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Setting-the-FFmpeg-version).
 
