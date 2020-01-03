@@ -13,6 +13,7 @@ The version of FFmpeg here by default is **4.2.2** (but can be overridden). And 
 The details of how this script is implemented are described in this series of posts:
 * [Part 1](https://proandroiddev.com/a-story-about-ffmpeg-in-android-part-i-compilation-898e4a249422)
 * [Part 2](https://proandroiddev.com/a-story-about-ffmpeg-in-android-part-ii-integration-55fb217251f0)
+* [Part 3](https://proandroiddev.com/a-story-about-ffmpeg-on-android-part-iii-extension-71025444896e)
 
 The [WIKI](https://github.com/Javernaut/ffmpeg-android-maker/wiki) contains a lot of useful information.
 
