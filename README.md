@@ -44,7 +44,7 @@ You have to define two environment variables:
 
 Also, if you want to build **libaom**, then you have to install the cmake;3.10.2.4988404 package via Android SDK.
 
-For **libdav1d** building you also need to install *ninja* and *meson* tools.
+For **libdav1d** building you also need to install *ninja* and *meson 0.52.1* tools.
 
 ## Features
 
