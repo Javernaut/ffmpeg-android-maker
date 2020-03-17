@@ -42,12 +42,12 @@ Docker can be used to build the project without the need to install any build de
 
 The build output is copied to /build/build. This should be mounted to a folder on the host machine to access.
 
- 1. Build the image. You only need to do this once unless you need to change SDK/NDK versions:
+1. Build the image. You only need to do this once unless you need to change SDK/NDK versions:
     ```sh
     docker build --rm --tag ffmpeg-android-maker:latest .
     ```
-	
- 2. Run the container. This will download ffmpeg, build it, then copy to /build/build:
+
+2. Run the container. This will download ffmpeg, build it, then copy to /build/build:
     ```sh
     docker container run --rm --name ffmpeg-android-maker -v /path/to/host/output:/build/build ffmpeg-android-maker
 
