@@ -9,7 +9,7 @@ ARG ANDROID_API_LEVEL=29
 WORKDIR /build
 
 RUN apt-get update && \
-	apt-get install -y \
+	apt-get install -y --no-install-recommends \
 		autoconf \
 		automake \
 		build-essential \
