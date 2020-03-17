@@ -34,7 +34,26 @@ On **macOS** or **Linux** just execute the script in terminal.
 
 ~~It is also possible to execute this script on a **Windows** machine with [MSYS2](https://www.msys2.org). You also need to install specific packages to it: *make*, *git*, *diffutils* and *tar*. The script supports both 32-bit and 64-bit versions of Windows. Also see Prerequisites section for necessary software.~~
 
-Since v2.0.0 the **Windows** support is temporary absent.
+Since v2.0.0 **Windows** support is temporary absent, however you can still bulid using [Docker](#docker).
+
+### Docker
+
+Docker can be used to build the project without the need to install any build dependencies and also enables build support on Windows.
+
+The build output is copied to /build/build. This should be mounted to a folder on the host machine to access.
+
+1. Build the image.  You only need to do this once unless you need to change SDK/NDK versions:
+    ```sh
+    docker build --rm --tag ffmpeg-android-maker:latest .
+    ```
+2. Run the container. This will download ffmpeg, build it, then copy to /build/build:
+    ```sh
+    docker container run --rm --name ffmpeg-android-maker -v /path/to/host/output:/build/build ffmpeg-android-maker
+    ```
+    On Windows you can pass in a host path in the following way:
+    ```
+    -v C:\path\to\host\output:/build/build
+    ```
 
 ## Prerequisites
 
