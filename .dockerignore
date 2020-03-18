@@ -1,0 +1,8 @@
+**/build
+**/images
+**/output
+**/stats
+**/.git
+**/.gitignore
+**/README.md
+**/.travis.yml
