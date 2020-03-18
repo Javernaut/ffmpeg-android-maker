@@ -41,6 +41,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --disable-static \
   --pkg-config=$(which pkg-config) \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
+  ${USER_BUILD_CONFIGURATION_FLAGS} \  
   --disable-runtime-cpudetect \
   --disable-programs \
   --disable-muxers \

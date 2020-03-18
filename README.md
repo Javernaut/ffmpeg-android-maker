@@ -49,9 +49,12 @@ The build output is copied to /build/build. This should be mounted to a folder o
 
 2.  Run the container. This will download ffmpeg, build it, then copy to /build/build:
     ```sh
-    docker container run --rm --name ffmpeg-android-maker -v /path/to/host/output:/build/build ffmpeg-android-maker
-
+    docker container run --rm --name ffmpeg-android-maker USER_BUILD_CONFIGURATION_FLAGS="--disable-gpl" -v /path/to/host/output:/build/build ffmpeg-android-maker
     ```
+
+    Use the environment variable USER_BUILD_CONFIGURATION_FLAGS to pass custom compile flags if required, e.g. --disable-gpl.
+
+
     On Windows you can pass in a host path in the following way:
     ```sh
     -v C:\path\to\host\output:/build/build
