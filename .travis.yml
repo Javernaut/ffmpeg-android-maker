@@ -13,7 +13,7 @@ install:
   - installAndroidComponent "cmake;3.10.2.4988404"
   # Installing meson, ninja and nasm that are necessary for libdav1d building
   - sudo apt-get install python3-pip python3-setuptools python3-wheel ninja-build
-  - sudo pip3 install meson==0.52.1
+  - sudo pip3 install meson==0.53.2
   - curl http://archive.ubuntu.com/ubuntu/pool/universe/n/nasm/nasm_2.14.02-1_amd64.deb --output $HOME/nasm_2.14.02-1_amd64.deb
   - sudo dpkg -i $HOME/nasm_2.14.02-1_amd64.deb
 script:
