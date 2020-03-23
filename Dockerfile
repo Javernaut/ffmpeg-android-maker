@@ -42,7 +42,6 @@ RUN wget -q "https://dl.google.com/android/repository/commandlinetools-linux-${S
 	rm /tmp/commandlinetools-*.zip
 
 COPY scripts ./scripts
-COPY sources ./sources
 COPY ffmpeg-android-maker.sh ./
 
 RUN chmod +x ./ffmpeg-android-maker.sh
