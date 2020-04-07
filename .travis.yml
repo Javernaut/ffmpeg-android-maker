@@ -3,12 +3,12 @@ jdk: openjdk8
 dist: xenial
 install:
   # Installing Android SDK
-  - curl https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip --output $HOME/android-sdk.zip
+  - curl https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip --output $HOME/android-sdk.zip
   - unzip -qq $HOME/android-sdk.zip -d $HOME/android-sdk
   - export ANDROID_SDK_HOME=$HOME/android-sdk
   - export ANDROID_NDK_HOME=$ANDROID_SDK_HOME/ndk/21.0.6113669
   # Installing necessary components of Android SDK
-  - function installAndroidComponent() { yes | ${ANDROID_SDK_HOME}/tools/bin/sdkmanager $1 > /dev/null; }
+  - function installAndroidComponent() { yes | ${ANDROID_SDK_HOME}/tools/bin/sdkmanager --sdk_root=${ANDROID_SDK_HOME} $1 > /dev/null; }
   - installAndroidComponent "ndk;21.0.6113669"
   - installAndroidComponent "cmake;3.10.2.4988404"
   # Installing meson, ninja and nasm that are necessary for libdav1d building
