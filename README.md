@@ -10,9 +10,9 @@ Here is a script that downloads the source code of [FFmpeg](https://www.ffmpeg.o
 
 The script also produces `ffmpeg` and `ffprobe` executables that can be used in Android's terminal directly or can even be embedded into an Android app. They can be found in `build` directory after the successful build.
 
-The main focus of ffmpeg-android-maker is to prepare shared libraries for seamless integration into an Android project. And it's not the only thing this project does.
+The main focus of ffmpeg-android-maker is to prepare shared libraries for seamless integration into an Android project. The script prepares the `output` directory that is meant to be used. And it's not the only thing this project does.
 
-By default this script downloads and build the FFmpeg **4.2.2**, but the version can be overridden.
+By default this script downloads and builds the FFmpeg **4.2.2**, but the version can be overridden.
 
 The details of how this script is implemented are described in this series of posts:
 * [Part 1](https://proandroiddev.com/a-story-about-ffmpeg-in-android-part-i-compilation-898e4a249422)
@@ -23,9 +23,11 @@ The [WIKI](https://github.com/Javernaut/ffmpeg-android-maker/wiki) contains a lo
 
 ## Customization
 
-The actual content of `output` directory depends on how the FFmpeg was configured before assembling. The [master](https://github.com/Javernaut/ffmpeg-android-maker) branch of ffmpeg-android-maker builds 'vanilla' version of FFmpeg. This means all default components and libraries are built (according to the image).
+The actual content of `output` directory depends on how the FFmpeg was configured before assembling. The [master](https://github.com/Javernaut/ffmpeg-android-maker) branch of ffmpeg-android-maker builds 'vanilla' version of FFmpeg. This means all default components and shared libraries are built (according to the image).
 
-The [what-the-codec](https://github.com/Javernaut/ffmpeg-android-maker/tree/what-the-codec) branch contains certain customizations in build scripts of FFmpeg and certain external libraries. These customizations are meant to be an example of how this project can be tuned to obtain the only functionality that is actually needed. The [WhatTheCodec](https://github.com/Javernaut/WhatTheCodec) Android app uses only a subset of FFmpeg's functionality, so the redundant parts are not even compiled. This gives much smaller output binaries.
+The [what-the-codec](https://github.com/Javernaut/ffmpeg-android-maker/tree/what-the-codec) branch contains certain customizations in build scripts of FFmpeg and certain external libraries. These customizations are meant to be an example of how this project can be tuned to obtain the only functionality that is actually needed. What is actually customized can be seen [here](https://github.com/Javernaut/ffmpeg-android-maker/commit/734a4e98c41576b8b9fcf032e0754315b5b77a82).
+
+The [WhatTheCodec](https://github.com/Javernaut/WhatTheCodec) Android app uses only a subset of FFmpeg's functionality, so the redundant parts are not even compiled. This gives much smaller output binaries.
 
 ## Supported Android ABIs
 
