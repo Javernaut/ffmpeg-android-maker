@@ -42,7 +42,10 @@ On **macOS** or **Linux** just execute the ffmpeg-android-maker.sh script in ter
 
 ~~It is also possible to execute this script on a **Windows** machine with [MSYS2](https://www.msys2.org). You also need to install specific packages to it: *make*, *git*, *diffutils* and *tar*. The script supports both 32-bit and 64-bit versions of Windows. Also see Prerequisites section for necessary software.~~
 
-Since v2.0.0 the **Windows** support is temporary absent, but soon a Docker image will be available to be used on any host OS.
+Since v2.0.0 the MSYS2 support is temporary absent.
+
+Since v2.1.1 the **Windows** support is done with [Docker](https://www.docker.com) tool.
+Check [this WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Docker-support) for more info.
 
 ## Requirements
 
