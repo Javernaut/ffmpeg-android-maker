@@ -49,6 +49,10 @@ do
       EXTERNAL_LIBRARIES+=( "libmp3lame" )
       shift
     ;;
+    --enable-libopus)
+      EXTERNAL_LIBRARIES+=( "libopus" )
+      shift
+    ;;
     *)
       echo "Unknown argument $argument"
     ;;
