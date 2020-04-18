@@ -3,17 +3,21 @@
 ./configure \
     --prefix=${INSTALL_DIR} \
     --host=${TARGET} \
-    --with-sysroot=${SYSROOT_PATH} \
     --disable-shared \
     --enable-static \
-    --with-pic \
     --disable-fast-install \
-    --disable-analyzer-hooks \
-    --disable-gtktest \
-    --disable-frontend \
+    --with-pic \
+    --with-sysroot=${SYSROOT_PATH} \
+    --enable-asm \
+    --enable-check-asm \
+    --disable-rtcd \
+    --disable-doc \
+    --disable-extra-programs \
     CC=${FAM_CC} \
-    AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB}
+    CCLD=${FAM_LD} \
+    CCAS=${FAM_AS} \
+    RANLIB=${FAM_RANLIB} \
+    AR=${FAM_AR}
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
