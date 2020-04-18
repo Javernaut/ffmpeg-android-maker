@@ -10,30 +10,30 @@ SOURCE_TYPE=TAR
 SOURCE_VALUE=4.2.2
 API_LEVEL=16
 
-for artument in "$@"
+for argument in "$@"
 do
-  case $artument in
+  case $argument in
     # Use this value as Android platform version during compilation.
     --android-api-level=*)
-      API_LEVEL="${artument#*=}"
+      API_LEVEL="${argument#*=}"
       shift
     ;;
     # Checkout the particular tag in the FFmpeg's git repository
     --source-git-tag=*)
       SOURCE_TYPE=GIT_TAG
-      SOURCE_VALUE="${artument#*=}"
+      SOURCE_VALUE="${argument#*=}"
       shift
     ;;
     # Checkout the particular branch in the FFmpeg's git repository
     --source-git-branch=*)
       SOURCE_TYPE=GIT_BRANCH
-      SOURCE_VALUE="${artument#*=}"
+      SOURCE_VALUE="${argument#*=}"
       shift
     ;;
     # Download the particular tar archive by its version
     --source-tar=*)
       SOURCE_TYPE=TAR
-      SOURCE_VALUE="${artument#*=}"
+      SOURCE_VALUE="${argument#*=}"
       shift
     ;;
     # Arguments below enable certain external libraries to build into FFmpeg
@@ -50,7 +50,7 @@ do
       shift
     ;;
     *)
-      echo "Unknown argument $artument"
+      echo "Unknown argument $argument"
     ;;
   esac
 done
