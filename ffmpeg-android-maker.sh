@@ -97,12 +97,8 @@ do
   cd ${BASE_DIR}
 done
 
-# ABIs to build FFmpeg for.
-# x86 is the first, because it is likely to have Text Relocations.
-# In this case the rest ABIs will not be assembled at all.
-ABIS_TO_BUILD=( "x86" "x86_64" "armeabi-v7a" "arm64-v8a" )
-
-for ABI in ${ABIS_TO_BUILD[@]}
+# Main build loop
+for ABI in ${FFMPEG_ABIS_TO_BUILD[@]}
 do
   # Exporting variables for the current ABI
   source ${SCRIPTS_DIR}/export-build-variables.sh ${ABI}
