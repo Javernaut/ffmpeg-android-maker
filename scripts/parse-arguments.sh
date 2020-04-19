@@ -14,7 +14,7 @@ for argument in "$@"
 do
   case $argument in
     # Use this value as Android platform version during compilation.
-    --android-api-level=*)
+    --android-api-level=*|-android=*)
       API_LEVEL="${argument#*=}"
       shift
     ;;
@@ -37,15 +37,15 @@ do
       shift
     ;;
     # Arguments below enable certain external libraries to build into FFmpeg
-    --enable-libaom)
+    --enable-libaom|-aom)
       EXTERNAL_LIBRARIES+=( "libaom" )
       shift
     ;;
-    --enable-libdav1d)
+    --enable-libdav1d|-dav1d)
       EXTERNAL_LIBRARIES+=( "libdav1d" )
       shift
     ;;
-    --enable-libmp3lame)
+    --enable-libmp3lame|-mp3lame)
       EXTERNAL_LIBRARIES+=( "libmp3lame" )
       shift
     ;;
