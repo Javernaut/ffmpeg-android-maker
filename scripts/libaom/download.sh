@@ -6,8 +6,8 @@
 
 # This 2 variables have to be changed at once.
 # The first one is produced by 'git describe' command while being in the commit represented by the second one.
-AOM_VERSION=v1.0.0-2780-ge1ec46ae2
-AOM_HASH=e1ec46ae24bb406057c3c256e69cd359b342a8d3
+AOM_VERSION=v1.0.0-errata1-avif
+AOM_HASH=4eb1e7795b9700d532af38a2d9489458a8038233
 
 echo "Using libaom $AOM_VERSION"
 AOM_SOURCES=libaom-${AOM_VERSION}
