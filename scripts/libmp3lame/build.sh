@@ -13,7 +13,7 @@
     --disable-frontend \
     CC=${FAM_CC} \
     AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB}
+    RANLIB=${FAM_RANLIB} || exit 1
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}

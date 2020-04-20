@@ -27,15 +27,21 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --target-os=android \
   --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
   --sysroot=${SYSROOT_PATH} \
-  --cross-prefix=${CROSS_PREFIX_WITH_PATH} \
   --cc=${FAM_CC} \
+  --cxx=${FAM_CXX} \
+  --ld=${FAM_LD} \
+  --ar=${FAM_AR} \
+  --as=${FAM_AS} \
+  --nm=${FAM_NM} \
+  --ranlib=${FAM_RANLIB} \
+  --strip=${FAM_STRIP} \
   --extra-cflags="-O3 -fPIC $DEP_CFLAGS" \
   --extra-ldflags="$DEP_LD_FLAGS" \
   --enable-shared \
   --disable-static \
   --pkg-config=$(which pkg-config) \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
-  $ADDITIONAL_COMPONENTS
+  $ADDITIONAL_COMPONENTS || exit 1
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}

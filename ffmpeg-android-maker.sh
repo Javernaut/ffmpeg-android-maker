@@ -112,13 +112,13 @@ do
     cd ${!COMPONENT_SOURCES_DIR_VARIABLE}
 
     # and executing the component-specific build script
-    source ${SCRIPTS_DIR}/${COMPONENT}/build.sh
+    source ${SCRIPTS_DIR}/${COMPONENT}/build.sh || exit 1
 
     # Returning to the root directory. Just in case.
     cd ${BASE_DIR}
   done
 
-  checkTextRelocations
+  checkTextRelocations || exit 1
 
   prepareOutput
 done
