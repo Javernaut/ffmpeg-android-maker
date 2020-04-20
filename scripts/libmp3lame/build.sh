@@ -13,7 +13,7 @@
     --disable-frontend \
     CC=${FAM_CC} \
     AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB}
+    RANLIB=${FAM_RANLIB} || exit 1
 
 export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lmp3lame"
 
