@@ -54,7 +54,12 @@ export TARGET_TRIPLE_MACHINE_CC=$TARGET_TRIPLE_MACHINE_CC
 export CPU_FAMILY=$CPU_FAMILY
 
 # Common prefix for ld, as, etc.
-export CROSS_PREFIX=${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
+if [ $DESIRED_BINUTILS = "gnu" ] ; then
+  export CROSS_PREFIX=${TARGET_TRIPLE_MACHINE_BINUTILS}-linux-${TARGET_TRIPLE_OS}-
+else
+  export CROSS_PREFIX=llvm-
+fi
+
 export CROSS_PREFIX_WITH_PATH=${TOOLCHAIN_PATH}/bin/${CROSS_PREFIX}
 
 # Exporting Binutils paths, if passing just CROSS_PREFIX_WITH_PATH is not enough
@@ -62,10 +67,6 @@ export CROSS_PREFIX_WITH_PATH=${TOOLCHAIN_PATH}/bin/${CROSS_PREFIX}
 export FAM_ADDR2LINE=${CROSS_PREFIX_WITH_PATH}addr2line
 export        FAM_AR=${CROSS_PREFIX_WITH_PATH}ar
 export        FAM_AS=${CROSS_PREFIX_WITH_PATH}as
-export       FAM_DWP=${CROSS_PREFIX_WITH_PATH}dwp
-export   FAM_ELFEDIT=${CROSS_PREFIX_WITH_PATH}elfedit
-export     FAM_GPROF=${CROSS_PREFIX_WITH_PATH}gprof
-export        FAM_LD=${CROSS_PREFIX_WITH_PATH}ld
 export        FAM_NM=${CROSS_PREFIX_WITH_PATH}nm
 export   FAM_OBJCOPY=${CROSS_PREFIX_WITH_PATH}objcopy
 export   FAM_OBJDUMP=${CROSS_PREFIX_WITH_PATH}objdump
@@ -79,6 +80,14 @@ export TARGET=${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${ANDROID_PLA
 # The name for compiler is slightly different, so it is defined separatly.
 export FAM_CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
 export FAM_CXX=${FAM_CC}++
+
+if [ $DESIRED_BINUTILS = "gnu" ] ; then
+  export FAM_LD=${CROSS_PREFIX_WITH_PATH}ld
+else
+  # If desired binutils has to be 'llvm', then use clang as linker.
+  export FAM_LD=${FAM_CC}
+fi
+
 # TODO consider abondaning this strategy of defining the name of the clang wrapper
 # in favour of just passing -mstackrealign and -fno-addrsig depending on
 # ANDROID_ABI, ANDROID_PLATFORM and NDK's version
