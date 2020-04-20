@@ -34,7 +34,6 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --enable-shared \
   --disable-static \
   --pkg-config=$(which pkg-config) \
-  --pkg-config-flags="--static" \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
   $ADDITIONAL_COMPONENTS
 
