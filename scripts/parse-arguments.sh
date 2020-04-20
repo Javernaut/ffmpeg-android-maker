@@ -55,7 +55,7 @@ for argument in "$@"; do
       SOURCE_VALUE="${argument#*=}"
     ;;
     # Which binutils to use (gnu or llvm)
-    --binutils=*)
+    --binutils=*|-binutils=*)
       binutils_value="${argument#*=}"
       case $binutils_value in
         gnu|llvm)
