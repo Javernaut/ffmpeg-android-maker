@@ -73,7 +73,7 @@ for argument in "$@"; do
     --enable-libdav1d|-dav1d)
       EXTERNAL_LIBRARIES+=( "libdav1d" )
     ;;
-    --enable-libmp3lame|-mp3lame)
+    --enable-libmp3lame|-mp3lame|-lame)
       EXTERNAL_LIBRARIES+=( "libmp3lame" )
     ;;
     *)

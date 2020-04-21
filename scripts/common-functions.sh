@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
 
 # Function that downloads an archive with the source code by the given url,
-# extracts its files and exports a variable SOURCES_DIR_lib${LIBRARY_NAME}
-function downloadArchive() {
+# extracts its files and exports a variable SOURCES_DIR_${LIBRARY_NAME}
+function downloadTarArchive() {
+  # The full name of the library
   LIBRARY_NAME=$1
-  LIBRARY_VERSION=$2
-  DOWNLOAD_URL=$3
+  # The url of the source code archive
+  DOWNLOAD_URL=$2
 
-  echo "Ensuring sources of $LIBRARY_NAME $LIBRARY_VERSION"
-  LIBRARY_SOURCES=${LIBRARY_NAME}-${LIBRARY_VERSION}
+  ARCHIVE_NAME=${DOWNLOAD_URL##*/}
+  # Name of the directory after the archive extraction
+  LIBRARY_SOURCES="${ARCHIVE_NAME%.tar.*}"
+
+  echo "Ensuring sources of $LIBRARY_SOURCES"
 
   if [[ ! -d "$LIBRARY_SOURCES" ]]; then
     curl -O ${DOWNLOAD_URL}
 
-    ARCHIVE_NAME=${DOWNLOAD_URL##*/}
     tar xf ${ARCHIVE_NAME} -C .
     rm ${ARCHIVE_NAME}
   fi
 
-  export SOURCES_DIR_lib${LIBRARY_NAME}=$(pwd)/${LIBRARY_SOURCES}
+  export SOURCES_DIR_${LIBRARY_NAME}=$(pwd)/${LIBRARY_SOURCES}
 }
