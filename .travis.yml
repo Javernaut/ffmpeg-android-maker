@@ -17,4 +17,4 @@ install:
   - curl http://archive.ubuntu.com/ubuntu/pool/universe/n/nasm/nasm_2.14.02-1_amd64.deb --output $HOME/nasm_2.14.02-1_amd64.deb
   - sudo dpkg -i $HOME/nasm_2.14.02-1_amd64.deb
 script:
-  - ./ffmpeg-android-maker.sh -dav1d -mp3lame -aom -opus -wavpack -android=18
+  - ./ffmpeg-android-maker.sh -dav1d -mp3lame -aom -opus -wavpack -twolame -android=18

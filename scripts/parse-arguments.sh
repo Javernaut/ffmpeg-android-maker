@@ -79,8 +79,11 @@ for argument in "$@"; do
     --enable-libopus|-opus)
       EXTERNAL_LIBRARIES+=( "libopus" )
     ;;
-    --enable-wavpack|-wavpack)
+    --enable-libwavpack|-wavpack)
       EXTERNAL_LIBRARIES+=( "libwavpack" )
+    ;;
+    --enable-libtwolame|-twolame)
+      EXTERNAL_LIBRARIES+=( "libtwolame" )
     ;;
     *)
       echo "Unknown argument $argument"
