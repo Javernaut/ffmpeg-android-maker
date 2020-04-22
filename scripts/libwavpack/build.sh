@@ -3,6 +3,10 @@
 # The Wavpack may reqire libiconv for proper work
 # Consider building it and passing via --with-iconv
 
+if [[ $ANDROID_ABI = "arm64-v8a" ]]; then
+  ADDITIONAL_FLAGS=--disable-asm
+fi
+
 ./configure \
     --prefix=${INSTALL_DIR} \
     --host=${TARGET} \
@@ -12,11 +16,11 @@
     --with-pic \
     --disable-apps \
     --disable-tests \
-    --enable-asm \
     --disable-man \
     CC=${FAM_CC} \
     AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB} || exit 1
+    RANLIB=${FAM_RANLIB} \
+    ${ADDITIONAL_FLAGS} || exit 1
 
 export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lm"
 
