@@ -85,6 +85,9 @@ for argument in "$@"; do
     --enable-libtwolame|-twolame)
       EXTERNAL_LIBRARIES+=( "libtwolame" )
     ;;
+    --enable-libspeex|-speex)
+      EXTERNAL_LIBRARIES+=( "libspeex" )
+    ;;
     *)
       echo "Unknown argument $argument"
     ;;
