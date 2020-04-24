@@ -30,12 +30,16 @@ The [what-the-codec](https://github.com/Javernaut/ffmpeg-android-maker/tree/what
 
 The [WhatTheCodec](https://github.com/Javernaut/WhatTheCodec) Android app uses only a subset of FFmpeg's functionality, so the redundant parts are not even compiled. This gives much smaller output binaries.
 
+Also there are a lot of arguments that you can pass to the `ffmpeg-android-maker.sh` script for tuning certain features. Check this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments) out for more info.
+
 ## Supported Android ABIs
 
 * armeabi-v7a (with NEON)
 * arm64-v8a
 * x86
 * x86_64
+
+You can build only some of these ABIs by specifying a [flag](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments#desired-abis-to-build).
 
 ## Supported host OS
 
@@ -56,11 +60,7 @@ Before the script is executed you have to define two environment variables:
 * `ANDROID_SDK_HOME` - path to your Android SDK
 * `ANDROID_NDK_HOME` - path to your Android NDK
 
-Certain external libraries require additional software to be installed:
-* **libaom** requires the 'cmake;3.10.2.4988404' package to be installed via Android SDK.
-* For **libdav1d** building you also need to install *ninja* and *meson* tools.
-
-Note that if you don't need these external libraries then you also don't need to install the additional software. These external libraries are not built by default.
+Certain external libraries require additional software to be installed. Check this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Supported-external-libraries) out for more info. Note that if you don't need these external libraries then you also don't need to install the additional software. These external libraries are not built by default.
 
 ## Features
 
