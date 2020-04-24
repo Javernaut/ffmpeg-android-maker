@@ -3,3 +3,5 @@ output
 sources
 stats
 .DS_Store
+.idea
+*.iml
