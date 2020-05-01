@@ -71,3 +71,7 @@ Certain external libraries require additional software to be installed. Check th
 **Test your script in a cloud**. This repository has CI integration and you can use it too for your own configurations. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Build-automation).
 
 **Text relocations monitoring**. After an assembling is finished you can look into stats/text-relocations.txt file. This file lists all \*.so files that were built and reports if any of them has text relocations. If you don't see any mentioning of 'TEXTREL' in the file, you are good. Otherwise, you will see exact binaries that have this problem. The Travis CI build will automatically fail if text relocations occur.
+
+## License
+
+The ffmpeg-android-maker's source code is available under the MIT license. See the `LICENSE.txt` file for more details.
