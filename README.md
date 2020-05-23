@@ -13,7 +13,7 @@ The script also produces `ffmpeg` and `ffprobe` executables that can be used in 
 
 The main focus of ffmpeg-android-maker is to prepare shared libraries for seamless integration into an Android project. The script prepares the `output` directory that is meant to be used. And it's not the only thing this project does.
 
-By default this script downloads and builds the FFmpeg **4.2.2**, but the version can be overridden.
+By default this script downloads and builds the FFmpeg **4.2.3**, but the version can be overridden.
 
 The details of how this script is implemented are described in this series of posts:
 * [Part 1](https://proandroiddev.com/a-story-about-ffmpeg-in-android-part-i-compilation-898e4a249422)
@@ -71,3 +71,7 @@ Certain external libraries require additional software to be installed. Check th
 **Test your script in a cloud**. This repository has CI integration and you can use it too for your own configurations. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Build-automation).
 
 **Text relocations monitoring**. After an assembling is finished you can look into stats/text-relocations.txt file. This file lists all \*.so files that were built and reports if any of them has text relocations. If you don't see any mentioning of 'TEXTREL' in the file, you are good. Otherwise, you will see exact binaries that have this problem. The Travis CI build will automatically fail if text relocations occur.
+
+## License
+
+The ffmpeg-android-maker's source code is available under the MIT license. See the `LICENSE.txt` file for more details.
