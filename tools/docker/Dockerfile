@@ -2,8 +2,8 @@ FROM ubuntu:20.04
 
 # Arguments that can be overridden in 'docker build' command:
 # Versions of Android SDK and NDK. The CMake is installed via NDK.
-ARG VERSION_SDK=6200805
-ARG VERSION_NDK=21.0.6113669
+ARG VERSION_SDK=6514223
+ARG VERSION_NDK=21.3.6528147
 ARG VERSION_CMAKE=3.10.2.4988404
 
 # Packages to install via apt-get
