@@ -39,26 +39,26 @@ Also there are a lot of arguments that you can pass to the `ffmpeg-android-maker
 * x86
 * x86_64
 
-You can build only some of these ABIs by specifying a [flag](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments#desired-abis-to-build).
+If you need to build only some of these ABIs, you can do so by specifying a [flag](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments#desired-abis-to-build).
 
 ## Supported host OS
 
-On **macOS** or **Linux** just execute the ffmpeg-android-maker.sh script in terminal. Please follow the instructions in [Requirements](#Requirements) section.
+Regardless of the OS you use, you need to setup it before executing the script. Please follow the instructions in [Requirements](#Requirements) section.
 
-~~It is also possible to execute this script on a **Windows** machine with [MSYS2](https://www.msys2.org). You also need to install specific packages to it: *make*, *git*, *diffutils* and *tar*. The script supports both 32-bit and 64-bit versions of Windows. Also see Prerequisites section for necessary software.~~
+On **macOS** and **Linux** the script is supported natively. Just execute it script in the terminal.
 
-Since v2.0.0 the MSYS2 support is temporary absent.
+On **Windows 10** you can use [WSL](https://docs.microsoft.com/en-us/windows/wsl/about) technology to install [Ubuntu 20.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-2004-lts/9n6svws3rx71?activetab=pivot:overviewtab) app. Then follow the Linux way of executing the script. Note that you will need to manually install exactly Linux versions of Android SDK and NDK into your Linux subsystem. The [Dockerfile](https://github.com/Javernaut/ffmpeg-android-maker/blob/master/tools/docker/Dockerfile) may help to understand how to do the setup.
 
-Since v2.1.1 the **Windows** support is done with [Docker](https://www.docker.com) tool.
-Check [this WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Docker-support) for more info.
+Also on **any OS** you can use [Docker](https://www.docker.com) tool to execute the script.
+Check [this WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Docker-support) out to understand benefits of this approach.
 
 ## Requirements
 
-The script expects to use **at least** Android NDK **r19** (both **r20** and **r21** also work ok).
+The script assumes you have Android SDK and NDK already installed. In order to tell the script their locations you have to define 2 environment variables:
+* `ANDROID_SDK_HOME` - absolute path to your Android SDK
+* `ANDROID_NDK_HOME` - absolute path to your Android NDK
 
-Before the script is executed you have to define two environment variables:
-* `ANDROID_SDK_HOME` - path to your Android SDK
-* `ANDROID_NDK_HOME` - path to your Android NDK
+The script expects to use **at least** Android NDK **r19** (both **r20** and **r21** also work ok).
 
 Certain external libraries require additional software to be installed. Check this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Supported-external-libraries) out for more info. Note that if you don't need these external libraries then you also don't need to install the additional software. These external libraries are not built by default.
 
