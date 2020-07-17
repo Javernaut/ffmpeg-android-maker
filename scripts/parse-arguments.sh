@@ -88,6 +88,9 @@ for argument in "$@"; do
     --enable-libspeex|-speex)
       EXTERNAL_LIBRARIES+=( "libspeex" )
     ;;
+  --enable-libvpx|-vpx)
+      EXTERNAL_LIBRARIES+=( "libvpx" )
+    ;;
     *)
       echo "Unknown argument $argument"
     ;;
