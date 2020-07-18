@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+CROSS=${CROSS_PREFIX_WITH_PATH} \
 CC=${FAM_CC} \
 CXX=${FAM_CXX} \
 AR=${FAM_AR} \
