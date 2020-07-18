@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-CROSS=${CROSS_PREFIX_WITH_PATH} \
 CC=${FAM_CC} \
 CXX=${FAM_CXX} \
 AR=${FAM_AR} \
@@ -10,6 +9,7 @@ STRIP=${FAM_STRIP} \
 NM=${FAM_NM} \
 ./configure \
     --prefix=${INSTALL_DIR} \
+    --target=generic-gnu \
     --enable-pic \
     --disable-ccache \
     --disable-debug \
