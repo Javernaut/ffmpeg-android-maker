@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
-#Use --cpu
-
-#Try x-android-gcc with manual CC, CXX and other
+VPX_AS=${FAM_AS}
 
 case $ANDROID_ABI in
   x86)
-    EXTRA_BUILD_FLAGS="--enable-sse2 --enable-sse3 --enable-ssse3"
+    EXTRA_BUILD_FLAGS="--target=x86-android-gcc --disable-sse4_1 --disable-avx --disable-avx2 --disable-avx512"
+    VPX_AS=${FAM_YASM}
     ;;
   x86_64)
-    EXTRA_BUILD_FLAGS="--enable-sse2 --enable-sse3 --enable-ssse3 --enable-sse4_1"
+    EXTRA_BUILD_FLAGS="--target=x86_64-android-gcc --disable-avx --disable-avx2 --disable-avx512"
+    VPX_AS=${FAM_YASM}
     ;;
   armeabi-v7a)
-    EXTRA_BUILD_FLAGS="--enable-thumb --enable-neon --enable-neon-asm"
+    EXTRA_BUILD_FLAGS="--target=armv7-android-gcc"
     ;;
   arm64-v8a)
-    EXTRA_BUILD_FLAGS="--enable-thumb --enable-neon --enable-neon-asm"
+    EXTRA_BUILD_FLAGS="--target=arm64-android-gcc"
     ;;
 esac
 
@@ -23,13 +23,12 @@ CC=${FAM_CC} \
 CXX=${FAM_CXX} \
 AR=${FAM_AR} \
 LD=${FAM_LD} \
-AS=${FAM_AS} \
+AS=${VPX_AS} \
 STRIP=${FAM_STRIP} \
 NM=${FAM_NM} \
 ./configure \
     ${EXTRA_BUILD_FLAGS} \
     --prefix=${INSTALL_DIR} \
-    --target=generic-gnu \
     --libc=${SYSROOT_PATH} \
     --enable-pic \
     --enable-realtime-only \
