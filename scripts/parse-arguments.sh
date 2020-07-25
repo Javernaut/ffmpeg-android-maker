@@ -13,6 +13,17 @@ SOURCE_VALUE=4.3.1
 BINUTILS=gnu
 EXTERNAL_LIBRARIES=()
 
+ALL_SUPPORTED_LIBRARIES=(
+  "libaom"
+  "libdav1d"
+  "libmp3lame"
+  "libopus"
+  "libwavpack"
+  "libtwolame"
+  "libspeex"
+  "libvpx"
+)
+
 for argument in "$@"; do
   case $argument in
     # Build for only specified ABIs (separated by comma)
@@ -90,6 +101,9 @@ for argument in "$@"; do
     ;;
   --enable-libvpx|-vpx)
       EXTERNAL_LIBRARIES+=( "libvpx" )
+    ;;
+  --enable-all-external|-all)
+    EXTERNAL_LIBRARIES=${ALL_SUPPORTED_LIBRARIES[@]}
     ;;
     *)
       echo "Unknown argument $argument"
