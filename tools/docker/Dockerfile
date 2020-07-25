@@ -6,21 +6,6 @@ ARG VERSION_SDK=6609375
 ARG VERSION_NDK=21.3.6528147
 ARG VERSION_CMAKE=3.10.2.4988404
 
-# Packages to install via apt-get
-ARG VERSION_PYTHON3=3.8.2-0ubuntu2
-ARG VERSION_PYTHON3_PIP=20.0.2-5ubuntu1
-ARG VERSION_PYTHON3_SETUPTOOLS=45.2.0-1
-ARG VERSION_PYTHON3_WHEEL=0.34.2-1
-ARG VERSION_NINJA_BUILD=1.10.0-1build1
-ARG VERSION_BUILD_ESSENTIAL=12.8ubuntu1
-ARG VERSION_OPENJDK_8_JDK_HEADLESS=8u252-b09-1ubuntu1
-ARG VERSION_CURL=7.68.0-1ubuntu2.1
-ARG VERSION_UNZIP=6.0-25ubuntu1
-ARG VERSION_BASH=5.0-6ubuntu1
-ARG VERSION_NASM=2.14.02-1
-ARG VERSION_PKG_CONFIG=0.29.1-0ubuntu4
-ARG VERSION_MAKE=4.2.1-1.2
-
 # Package to install via pip3
 ARG VERSION_MESON=0.53.2
 
@@ -34,19 +19,19 @@ ENV ANDROID_NDK_HOME=${ANDROID_SDK_HOME}/ndk/${VERSION_NDK}
 
 # Installing basic software
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  python3=$VERSION_PYTHON3 \
-  python3-pip=$VERSION_PYTHON3_PIP \
-  python3-setuptools=$VERSION_PYTHON3_SETUPTOOLS \
-  python3-wheel=$VERSION_PYTHON3_WHEEL \
-  ninja-build=$VERSION_NINJA_BUILD \
-  build-essential=$VERSION_BUILD_ESSENTIAL \
-  openjdk-8-jdk-headless=$VERSION_OPENJDK_8_JDK_HEADLESS \
-  curl=$VERSION_CURL \
-  unzip=$VERSION_UNZIP \
-  bash=$VERSION_BASH \
-  nasm=$VERSION_NASM \
-  pkg-config=$VERSION_PKG_CONFIG \
-  make=$VERSION_MAKE \
+  python3 \
+  python3-pip \
+  python3-setuptools \
+  python3-wheel \
+  ninja-build \
+  build-essential \
+  openjdk-8-jdk-headless \
+  curl \
+  unzip \
+  bash \
+  nasm \
+  pkg-config \
+  make \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
