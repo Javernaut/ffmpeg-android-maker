@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-DAV1D_VERSION=0.7.1
+DAV1D_VERSION=0.7.0
 
 downloadTarArchive \
   "libdav1d" \
