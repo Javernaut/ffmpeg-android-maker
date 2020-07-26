@@ -22,7 +22,7 @@ ALL_SUPPORTED_LIBRARIES=(
   "libtwolame"
   "libspeex"
   "libvpx"
-  "fribidi"
+  "libfribidi"
 )
 
 for argument in "$@"; do
