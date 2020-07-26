@@ -22,6 +22,7 @@ ALL_SUPPORTED_LIBRARIES=(
   "libtwolame"
   "libspeex"
   "libvpx"
+  "libfreetype"
 )
 
 for argument in "$@"; do
@@ -101,6 +102,9 @@ for argument in "$@"; do
     ;;
   --enable-libvpx|-vpx)
       EXTERNAL_LIBRARIES+=( "libvpx" )
+    ;;
+  --enable-libfreetype|-freetype)
+      EXTERNAL_LIBRARIES+=( "libfreetype" )
     ;;
   --enable-all-external|-all)
     EXTERNAL_LIBRARIES=${ALL_SUPPORTED_LIBRARIES[@]}
