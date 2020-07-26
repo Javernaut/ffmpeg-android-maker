@@ -17,7 +17,7 @@ function downloadTarArchive() {
   echo "Ensuring sources of ${LIBRARY_NAME} in ${LIBRARY_SOURCES}"
 
   if [[ ! -d "$LIBRARY_SOURCES" ]]; then
-    curl -O ${DOWNLOAD_URL}
+    curl -LO ${DOWNLOAD_URL}
 
     EXTRACTION_DIR="."
     if [ "$NEED_EXTRA_DIRECTORY" = true ] ; then
