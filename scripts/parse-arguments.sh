@@ -23,6 +23,7 @@ ALL_SUPPORTED_LIBRARIES=(
   "libspeex"
   "libvpx"
   "libfreetype"
+  "libfribidi"
 )
 
 for argument in "$@"; do
@@ -105,6 +106,9 @@ for argument in "$@"; do
     ;;
   --enable-libfreetype|-freetype)
       EXTERNAL_LIBRARIES+=( "libfreetype" )
+    ;;
+  --enable-libfribidi|-fribidi)
+      EXTERNAL_LIBRARIES+=( "libfribidi" )
     ;;
   --enable-all-external|-all)
     EXTERNAL_LIBRARIES=${ALL_SUPPORTED_LIBRARIES[@]}
