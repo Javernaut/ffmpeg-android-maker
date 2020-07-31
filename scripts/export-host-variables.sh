@@ -33,5 +33,7 @@ export MAKE_EXECUTABLE=$(which make)
 export NINJA_EXECUTABLE=$(which ninja)
 # Meson is used for libdav1d building. Needs to be installed
 export MESON_EXECUTABLE=$(which meson)
-# Nasm is used for libdav1d building. Needs to be installed
+# Nasm is used for libdav1d and libx264 building. Needs to be installed
 export NASM_EXECUTABLE=$(which nasm)
+# A utility to properly pick shared libraries by FFmpeg's configure script. Needs to be installed
+export PKG_CONFIG_EXECUTABLE=$(which pkg-config)

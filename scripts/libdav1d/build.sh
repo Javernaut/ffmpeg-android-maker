@@ -10,7 +10,7 @@ c = '${FAM_CC}'
 ar = '${FAM_AR}'
 strip = '${FAM_STRIP}'
 nasm = '${NASM_EXECUTABLE}'
-pkgconfig = '$(which pkg-config)'
+pkgconfig = '${PKG_CONFIG_EXECUTABLE}'
 
 [properties]
 needs_exe_wrapper = true
