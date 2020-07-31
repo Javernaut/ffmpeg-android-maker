@@ -75,3 +75,5 @@ Certain external libraries require additional software to be installed. Check th
 ## License
 
 The ffmpeg-android-maker's source code is available under the MIT license. See the `LICENSE.txt` file for more details.
+
+However, the binaries that are produced have different license. The FFmpeg itself is under [LGPL 2.1](http://ffmpeg.org/legal.html). Enabling certain external libraries (like libx264) changes the license to be GPL 2 or later.
