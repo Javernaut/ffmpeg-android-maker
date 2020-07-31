@@ -12,8 +12,10 @@ SOURCE_TYPE=TAR
 SOURCE_VALUE=4.3.1
 BINUTILS=gnu
 EXTERNAL_LIBRARIES=()
+FFMPEG_GPL_ENABLED=false
 
-ALL_SUPPORTED_LIBRARIES=(
+# All FREE libraries that are supported
+SUPPORTED_LIBRARIES_FREE=(
   "libaom"
   "libdav1d"
   "libmp3lame"
@@ -26,95 +28,108 @@ ALL_SUPPORTED_LIBRARIES=(
   "libfribidi"
 )
 
+# All GPL libraries that are supported
+SUPPORTED_LIBRARIES_GPL=(
+  "libx264"
+)
+
 for argument in "$@"; do
   case $argument in
-    # Build for only specified ABIs (separated by comma)
-    --target-abis=*|-abis=*)
-      IFS=',' read -ra ABIS <<< "${argument#*=}"
-      for abi in "${ABIS[@]}"; do
-        case $abi in
-          x86|x86_64|armeabi-v7a|arm64-v8a)
-            ABIS_TO_BUILD+=( "$abi" )
-          ;;
-          arm)
-            ABIS_TO_BUILD+=( "armeabi-v7a" )
-          ;;
-          arm64)
-            ABIS_TO_BUILD+=( "arm64-v8a" )
-          ;;
-          *)
-            echo "Unknown ABI: $abi"
-          ;;
-        esac
-      done
-    ;;
-    # Use this value as Android platform version during compilation.
-    --android-api-level=*|-android=*)
-      API_LEVEL="${argument#*=}"
-    ;;
-    # Checkout the particular tag in the FFmpeg's git repository
-    --source-git-tag=*)
-      SOURCE_TYPE=GIT_TAG
-      SOURCE_VALUE="${argument#*=}"
-    ;;
-    # Checkout the particular branch in the FFmpeg's git repository
-    --source-git-branch=*)
-      SOURCE_TYPE=GIT_BRANCH
-      SOURCE_VALUE="${argument#*=}"
-    ;;
-    # Download the particular tar archive by its version
-    --source-tar=*)
-      SOURCE_TYPE=TAR
-      SOURCE_VALUE="${argument#*=}"
-    ;;
-    # Which binutils to use (gnu or llvm)
-    --binutils=*|-binutils=*)
-      binutils_value="${argument#*=}"
-      case $binutils_value in
-        gnu|llvm)
-          BINUTILS=$binutils_value
+  # Build for only specified ABIs (separated by comma)
+  --target-abis=* | -abis=*)
+    IFS=',' read -ra ABIS <<<"${argument#*=}"
+    for abi in "${ABIS[@]}"; do
+      case $abi in
+      x86 | x86_64 | armeabi-v7a | arm64-v8a)
+        ABIS_TO_BUILD+=("$abi")
         ;;
-        *)
-          echo "Unknown binutils: $binutils_value"
+      arm)
+        ABIS_TO_BUILD+=("armeabi-v7a")
+        ;;
+      arm64)
+        ABIS_TO_BUILD+=("arm64-v8a")
+        ;;
+      *)
+        echo "Unknown ABI: $abi"
         ;;
       esac
+    done
     ;;
-    # Arguments below enable certain external libraries to build into FFmpeg
-    --enable-libaom|-aom)
-      EXTERNAL_LIBRARIES+=( "libaom" )
+  # Use this value as Android platform version during compilation.
+  --android-api-level=* | -android=*)
+    API_LEVEL="${argument#*=}"
     ;;
-    --enable-libdav1d|-dav1d)
-      EXTERNAL_LIBRARIES+=( "libdav1d" )
+  # Checkout the particular tag in the FFmpeg's git repository
+  --source-git-tag=*)
+    SOURCE_TYPE=GIT_TAG
+    SOURCE_VALUE="${argument#*=}"
     ;;
-    --enable-libmp3lame|-mp3lame|-lame)
-      EXTERNAL_LIBRARIES+=( "libmp3lame" )
+  # Checkout the particular branch in the FFmpeg's git repository
+  --source-git-branch=*)
+    SOURCE_TYPE=GIT_BRANCH
+    SOURCE_VALUE="${argument#*=}"
     ;;
-    --enable-libopus|-opus)
-      EXTERNAL_LIBRARIES+=( "libopus" )
+  # Download the particular tar archive by its version
+  --source-tar=*)
+    SOURCE_TYPE=TAR
+    SOURCE_VALUE="${argument#*=}"
     ;;
-    --enable-libwavpack|-wavpack)
-      EXTERNAL_LIBRARIES+=( "libwavpack" )
-    ;;
-    --enable-libtwolame|-twolame)
-      EXTERNAL_LIBRARIES+=( "libtwolame" )
-    ;;
-    --enable-libspeex|-speex)
-      EXTERNAL_LIBRARIES+=( "libspeex" )
-    ;;
-  --enable-libvpx|-vpx)
-      EXTERNAL_LIBRARIES+=( "libvpx" )
-    ;;
-  --enable-libfreetype|-freetype)
-      EXTERNAL_LIBRARIES+=( "libfreetype" )
-    ;;
-  --enable-libfribidi|-fribidi)
-      EXTERNAL_LIBRARIES+=( "libfribidi" )
-    ;;
-  --enable-all-external|-all)
-    EXTERNAL_LIBRARIES=${ALL_SUPPORTED_LIBRARIES[@]}
-    ;;
+  # Which binutils to use (gnu or llvm)
+  --binutils=* | -binutils=*)
+    binutils_value="${argument#*=}"
+    case $binutils_value in
+    gnu | llvm)
+      BINUTILS=$binutils_value
+      ;;
     *)
-      echo "Unknown argument $argument"
+      echo "Unknown binutils: $binutils_value"
+      ;;
+    esac
+    ;;
+  # Arguments below enable certain external libraries to build into FFmpeg
+  --enable-libaom | -aom)
+    EXTERNAL_LIBRARIES+=("libaom")
+    ;;
+  --enable-libdav1d | -dav1d)
+    EXTERNAL_LIBRARIES+=("libdav1d")
+    ;;
+  --enable-libmp3lame | -mp3lame | -lame)
+    EXTERNAL_LIBRARIES+=("libmp3lame")
+    ;;
+  --enable-libopus | -opus)
+    EXTERNAL_LIBRARIES+=("libopus")
+    ;;
+  --enable-libwavpack | -wavpack)
+    EXTERNAL_LIBRARIES+=("libwavpack")
+    ;;
+  --enable-libtwolame | -twolame)
+    EXTERNAL_LIBRARIES+=("libtwolame")
+    ;;
+  --enable-libspeex | -speex)
+    EXTERNAL_LIBRARIES+=("libspeex")
+    ;;
+  --enable-libvpx | -vpx)
+    EXTERNAL_LIBRARIES+=("libvpx")
+    ;;
+  --enable-libfreetype | -freetype)
+    EXTERNAL_LIBRARIES+=("libfreetype")
+    ;;
+  --enable-libfribidi | -fribidi)
+    EXTERNAL_LIBRARIES+=("libfribidi")
+    ;;
+  --enable-libx264 | -x264)
+    EXTERNAL_LIBRARIES+=("libx264")
+    FFMPEG_GPL_ENABLED=true
+    ;;
+  --enable-all-free | -all-free)
+    EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
+    ;;
+  --enable-all-gpl | -all-gpl)
+    EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_GPL[@]}"
+    FFMPEG_GPL_ENABLED=true
+    ;;
+  *)
+    echo "Unknown argument $argument"
     ;;
   esac
   shift
@@ -124,7 +139,7 @@ done
 # The x86 is the first, because it is more likely to have Text Relocations.
 # In this case the rest ABIs will not be assembled at all.
 if [ ${#ABIS_TO_BUILD[@]} -eq 0 ]; then
-  ABIS_TO_BUILD=( "x86" "x86_64" "armeabi-v7a" "arm64-v8a" )
+  ABIS_TO_BUILD=("x86" "x86_64" "armeabi-v7a" "arm64-v8a")
 fi
 # The FFmpeg will be build for ABIs in this list
 export FFMPEG_ABIS_TO_BUILD=${ABIS_TO_BUILD[@]}

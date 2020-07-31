@@ -10,6 +10,10 @@ case $ANDROID_ABI in
     ;;
 esac
 
+if [ "$FFMPEG_GPL_ENABLED" = true ] ; then
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-gpl"
+fi
+
 # Preparing flags for enabling requested libraries
 ADDITIONAL_COMPONENTS=
 for LIBARY_NAME in ${FFMPEG_EXTERNAL_LIBRARIES[@]}
