@@ -13,6 +13,10 @@ case $ANDROID_ABI in
     ;;
 esac
 
+if [ "$FFMPEG_GPL_ENABLED" = true ] ; then
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-gpl"
+fi
+
 # Preparing flags for enabling requested libraries
 ADDITIONAL_COMPONENTS=
 for LIBARY_NAME in ${FFMPEG_EXTERNAL_LIBRARIES[@]}
@@ -37,7 +41,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --cxx=${FAM_CXX} \
   --ld=${FAM_LD} \
   --ar=${FAM_AR} \
-  --as=${FAM_AS} \
+  --as=${FAM_CC} \
   --nm=${FAM_NM} \
   --ranlib=${FAM_RANLIB} \
   --strip=${FAM_STRIP} \
@@ -45,7 +49,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --extra-ldflags="$DEP_LD_FLAGS" \
   --enable-shared \
   --disable-static \
-  --pkg-config=$(which pkg-config) \
+  --pkg-config=${PKG_CONFIG_EXECUTABLE} \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
   --disable-runtime-cpudetect \
   --disable-programs \
