@@ -4,8 +4,8 @@ source ${SCRIPTS_DIR}/common-functions.sh
 
 # Libx264 doesn't have any versioning system. Currently it has 2 branches: master and stable.
 # Latest commit in stable branch
-# Tue Jun 30 22:28:05 2020 +0300
-LIBX264_VERSION=cde9a93319bea766a92e306d69059c76de970190
+# Thu Jan 21 16:41:42 2021 +0300
+LIBX264_VERSION=544c61f082194728d0391fb280a6e138ba320a96
 
 downloadTarArchive \
   "libx264" \
