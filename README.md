@@ -1,7 +1,7 @@
 # ffmpeg-android-maker
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b9a9fe4c6874e65a5e2a3f9beb15605)](https://app.codacy.com/manual/Javernaut/ffmpeg-android-maker)
-[![Compilability check](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml/badge.svg)](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml)
+[![Compilability check](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml/badge.svg?branch=master)](https://github.com/Javernaut/ffmpeg-android-maker/actions/workflows/compilability_check.yml)
 [![Android Weekly #378](https://androidweekly.net/issues/issue-378/badge)](https://androidweekly.net/issues/issue-378)
 [![Android Weekly #396](https://androidweekly.net/issues/issue-396/badge)](https://androidweekly.net/issues/issue-396)
 
