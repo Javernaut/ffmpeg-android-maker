@@ -3,11 +3,11 @@ FROM ubuntu:20.04
 # Arguments that can be overridden in 'docker build' command:
 # Versions of Android SDK and NDK. The CMake is installed via NDK.
 ARG VERSION_SDK=6858069
-ARG VERSION_NDK=21.3.6528147
+ARG VERSION_NDK=21.4.7075529
 ARG VERSION_CMAKE=3.10.2.4988404
 
 # Package to install via pip3
-ARG VERSION_MESON=0.53.2
+ARG VERSION_MESON=0.57.1
 
 # The HOME variable isn't available for ENV directive (during building an image).
 # So we define one manually. For alpine and ubuntu it should be '/root'
