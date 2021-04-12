@@ -20,7 +20,6 @@ SUPPORTED_LIBRARIES_FREE=(
   "libdav1d"
   "libmp3lame"
   "libopus"
-  "libwavpack"
   "libtwolame"
   "libspeex"
   "libvpx"
