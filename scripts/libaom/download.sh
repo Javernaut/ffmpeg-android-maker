@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-AOM_VERSION=v2.0.2
+AOM_VERSION=v3.1.2
 
 downloadTarArchive \
   "libaom" \
