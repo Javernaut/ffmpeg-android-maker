@@ -82,6 +82,11 @@ export FAM_CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
 export FAM_CXX=${FAM_CC}++
 export FAM_LD=${FAM_CC}
 
+if [[ $DESIRED_BINUTILS == "llvm" ]]; then
+  # The llvm-as doesn't work in place of gnu as, so just using clang here
+  export FAM_AS=${FAM_CC}
+fi
+
 # TODO consider abondaning this strategy of defining the name of the clang wrapper
 # in favour of just passing -mstackrealign and -fno-addrsig depending on
 # ANDROID_ABI, ANDROID_PLATFORM and NDK's version
