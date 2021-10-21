@@ -7,7 +7,7 @@
 # Can be overridden with specific arguments.
 # See the end of this file for more description.
 ABIS_TO_BUILD=()
-API_LEVEL=16
+API_LEVEL=19
 SOURCE_TYPE=TAR
 SOURCE_VALUE=4.4
 EXTERNAL_LIBRARIES=()
