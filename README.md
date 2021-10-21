@@ -41,6 +41,8 @@ Also there are a lot of arguments that you can pass to the `ffmpeg-android-maker
 
 If you need to build only some of these ABIs, you can do so by specifying a [flag](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments#desired-abis-to-build).
 
+The default Android API version used to compile these binaries is **19**, as the minimum supported by the Android NDK r24. However, with NDK r23 it is still possible to have it **16**. Some external libraries (like libvpx) require to use higher API - **21**. This is explained at this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Available-script-arguments#android-platform-version) in more details.
+
 ## Supported host OS
 
 Regardless of the OS you use, you need to setup it before executing the script. Please follow the instructions in [Requirements](#Requirements) section.
@@ -58,7 +60,7 @@ The script assumes you have Android SDK and NDK already installed. In order to t
 * `ANDROID_SDK_HOME` - absolute path to your Android SDK
 * `ANDROID_NDK_HOME` - absolute path to your Android NDK
 
-The script expects to use **at least** Android NDK **r19** (both **r20** and **r21** also work ok).
+The script expects to use **at least** Android NDK **r23**. It doesn't matter if you use other version of NDK for you actual Android project.
 
 Certain external libraries require additional software to be installed. Check this [WIKI page](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Supported-external-libraries) out for more info. Note that if you don't need these external libraries then you also don't need to install the additional software. These external libraries are not built by default.
 
