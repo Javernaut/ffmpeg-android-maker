@@ -23,34 +23,29 @@ export TARGET_TRIPLE_OS="android"
 case $ANDROID_ABI in
   armeabi-v7a)
     #cc       armv7a-linux-androideabi16-clang
-    #binutils arm   -linux-androideabi  -ld
-    export TARGET_TRIPLE_MACHINE_BINUTILS=arm
+    export TARGET_TRIPLE_MACHINE_ARCH=arm
     TARGET_TRIPLE_MACHINE_CC=armv7a
     export TARGET_TRIPLE_OS=androideabi
     ;;
   arm64-v8a)
     #cc       aarch64-linux-android21-clang
-    #binutils aarch64-linux-android  -ld
-    export TARGET_TRIPLE_MACHINE_BINUTILS=aarch64
+    export TARGET_TRIPLE_MACHINE_ARCH=aarch64
     ;;
   x86)
     #cc       i686-linux-android16-clang
-    #binutils i686-linux-android  -ld
-    export TARGET_TRIPLE_MACHINE_BINUTILS=i686
+    export TARGET_TRIPLE_MACHINE_ARCH=i686
     CPU_FAMILY=x86
     ;;
   x86_64)
     #cc       x86_64-linux-android21-clang
-    #binutils x86_64-linux-android  -ld
-    export TARGET_TRIPLE_MACHINE_BINUTILS=x86_64
+    export TARGET_TRIPLE_MACHINE_ARCH=x86_64
     ;;
 esac
 
 # If the cc-specific variable isn't set, we fallback to binutils version
-[ -z "${TARGET_TRIPLE_MACHINE_CC}" ] && TARGET_TRIPLE_MACHINE_CC=${TARGET_TRIPLE_MACHINE_BINUTILS}
-export TARGET_TRIPLE_MACHINE_CC=$TARGET_TRIPLE_MACHINE_CC
+[ -z "${TARGET_TRIPLE_MACHINE_CC}" ] && TARGET_TRIPLE_MACHINE_CC=${TARGET_TRIPLE_MACHINE_ARCH}
 
-[ -z "${CPU_FAMILY}" ] && CPU_FAMILY=${TARGET_TRIPLE_MACHINE_BINUTILS}
+[ -z "${CPU_FAMILY}" ] && CPU_FAMILY=${TARGET_TRIPLE_MACHINE_ARCH}
 export CPU_FAMILY=$CPU_FAMILY
 
 # Common prefix for ld, as, etc.
@@ -70,7 +65,7 @@ export   FAM_STRINGS=${CROSS_PREFIX_WITH_PATH}strings
 export     FAM_STRIP=${CROSS_PREFIX_WITH_PATH}strip
 
 export TARGET=${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${ANDROID_PLATFORM}
-# The name for compiler is slightly different, so it is defined separatly.
+# The name for compiler is slightly different, so it is defined separately.
 export FAM_CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
 export FAM_CXX=${FAM_CC}++
 export FAM_LD=${FAM_CC}

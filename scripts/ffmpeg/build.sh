@@ -29,7 +29,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --prefix=${BUILD_DIR_FFMPEG}/${ANDROID_ABI} \
   --enable-cross-compile \
   --target-os=android \
-  --arch=${TARGET_TRIPLE_MACHINE_BINUTILS} \
+  --arch=${TARGET_TRIPLE_MACHINE_ARCH} \
   --sysroot=${SYSROOT_PATH} \
   --cc=${FAM_CC} \
   --cxx=${FAM_CXX} \
