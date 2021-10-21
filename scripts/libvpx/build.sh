@@ -12,10 +12,7 @@ case $ANDROID_ABI in
     VPX_AS=${FAM_YASM}
     ;;
   armeabi-v7a)
-    EXTRA_BUILD_FLAGS="--target=armv7-android-gcc --enable-thumb"
-    if [[ $DESIRED_BINUTILS == "llvm" ]]; then
-      EXTRA_BUILD_FLAGS+=" --disable-neon"
-    fi
+    EXTRA_BUILD_FLAGS="--target=armv7-android-gcc --enable-thumb --disable-neon"
     ;;
   arm64-v8a)
     EXTRA_BUILD_FLAGS="--target=arm64-android-gcc --enable-thumb"

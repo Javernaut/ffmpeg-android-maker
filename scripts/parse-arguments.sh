@@ -10,7 +10,6 @@ ABIS_TO_BUILD=()
 API_LEVEL=16
 SOURCE_TYPE=TAR
 SOURCE_VALUE=4.4
-BINUTILS=gnu
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
 
@@ -72,18 +71,6 @@ for argument in "$@"; do
   --source-tar=*)
     SOURCE_TYPE=TAR
     SOURCE_VALUE="${argument#*=}"
-    ;;
-  # Which binutils to use (gnu or llvm)
-  --binutils=* | -binutils=*)
-    binutils_value="${argument#*=}"
-    case $binutils_value in
-    gnu | llvm)
-      BINUTILS=$binutils_value
-      ;;
-    *)
-      echo "Unknown binutils: $binutils_value"
-      ;;
-    esac
     ;;
   # Arguments below enable certain external libraries to build into FFmpeg
   --enable-libaom | -aom)
@@ -154,4 +141,3 @@ export FFMPEG_EXTERNAL_LIBRARIES=${EXTERNAL_LIBRARIES[@]}
 # Desired Android API level to use during compilation
 # Will be replaced with 21 for 64bit ABIs if the value is less than 21
 export DESIRED_ANDROID_API_LEVEL=${API_LEVEL}
-export DESIRED_BINUTILS=${BINUTILS}
