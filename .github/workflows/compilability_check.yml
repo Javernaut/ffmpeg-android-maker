@@ -18,4 +18,5 @@ jobs:
       - name: Executing the script
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
-          ./ffmpeg-android-maker.sh -dav1d -abis=${{ matrix.abi }}
+          export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
+          ./ffmpeg-android-maker.sh -dav1d -android=16 -abis=${{ matrix.abi }}

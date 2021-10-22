@@ -19,7 +19,7 @@ sys_root = '${SYSROOT_PATH}'
 [host_machine]
 system = 'linux'
 cpu_family = '${CPU_FAMILY}'
-cpu = '${TARGET_TRIPLE_MACHINE_BINUTILS}'
+cpu = '${TARGET_TRIPLE_MACHINE_ARCH}'
 endian = 'little'
 
 [paths]
