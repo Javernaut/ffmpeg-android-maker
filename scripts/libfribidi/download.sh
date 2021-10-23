@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-FRIBIDI_VERSION=1.0.10
+FRIBIDI_VERSION=1.0.11
 
 downloadTarArchive \
   "libfribidi" \
