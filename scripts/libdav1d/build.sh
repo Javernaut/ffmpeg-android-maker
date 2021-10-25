@@ -22,7 +22,7 @@ cpu_family = '${CPU_FAMILY}'
 cpu = '${TARGET_TRIPLE_MACHINE_ARCH}'
 endian = 'little'
 
-[paths]
+[built-in options]
 prefix = '${INSTALL_DIR}'
 EOF
 
