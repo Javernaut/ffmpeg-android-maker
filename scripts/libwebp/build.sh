@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export CC=${FAM_CC}
+CC=${FAM_CC}
 
 ./configure \
     --prefix=${INSTALL_DIR} \
