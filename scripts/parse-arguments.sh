@@ -22,6 +22,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "libtwolame"
   "libspeex"
   "libvpx"
+  "libwebp"
   "libfreetype"
   "libfribidi"
 )
@@ -84,6 +85,9 @@ for argument in "$@"; do
     ;;
   --enable-libopus | -opus)
     EXTERNAL_LIBRARIES+=("libopus")
+    ;;
+  --enable-webp | -webp)
+    EXTERNAL_LIBRARIES+=("libwebp")
     ;;
   --enable-libwavpack | -wavpack)
     EXTERNAL_LIBRARIES+=("libwavpack")
