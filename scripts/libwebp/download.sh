@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-WEBP_VERSION=1.2.1
+WEBP_VERSION=1.2.2
 
 downloadTarArchive \
   "libwebp" \
