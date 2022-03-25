@@ -9,7 +9,7 @@
 ABIS_TO_BUILD=()
 API_LEVEL=19
 SOURCE_TYPE=TAR
-SOURCE_VALUE=4.4.1
+SOURCE_VALUE=5.0
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
 
@@ -22,6 +22,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "libtwolame"
   "libspeex"
   "libvpx"
+  "libwebp"
   "libfreetype"
   "libfribidi"
 )
@@ -84,6 +85,9 @@ for argument in "$@"; do
     ;;
   --enable-libopus | -opus)
     EXTERNAL_LIBRARIES+=("libopus")
+    ;;
+  --enable-webp | -webp)
+    EXTERNAL_LIBRARIES+=("libwebp")
     ;;
   --enable-libwavpack | -wavpack)
     EXTERNAL_LIBRARIES+=("libwavpack")
