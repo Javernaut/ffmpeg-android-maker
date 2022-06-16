@@ -28,15 +28,22 @@ jobs:
           ./ffmpeg-android-maker.sh ${{ inputs.buildOptions }} -abis=${{ matrix.abi }}
       - name: Pack artifacts
         run: tar -cf build.tar.gz build/
-           
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Test with environment variables
+        run: echo $TAG_NAME - $RELEASE_NAME
+        env:
+          TAG_NAME: nightly-tag-${{ steps.date.outputs.date }}-${{ matrix.abi }}
+          RELEASE_NAME: nightly-release-${{ steps.date.outputs.date }}-${{ matrix.abi }}
       - name: Create Draft Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ matrix.abi }}
-          release_name: ${{ matrix.abi }}
+          tag_name: ${{ env.TAG_NAME }}
+          release_name: ${{ env.RELEASE_NAME }}
           draft: true
           prerelease: false
 
