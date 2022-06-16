@@ -1,8 +1,8 @@
-name: build release binaries
+name: Build release binaries
 on:
   workflow_dispatch:
     inputs:
-      build_options:
+      buildOptions:
         description: 'ffmepg build script options'   
         required: true
         default: '-libbluray -android=21'
