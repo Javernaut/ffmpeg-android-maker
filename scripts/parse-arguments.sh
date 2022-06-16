@@ -25,6 +25,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "libwebp"
   "libfreetype"
   "libfribidi"
+  "libbluray"
 )
 
 # All GPL libraries that are supported
@@ -111,6 +112,10 @@ for argument in "$@"; do
     EXTERNAL_LIBRARIES+=("libx264")
     FFMPEG_GPL_ENABLED=true
     ;;
+  --enable-libbluray | -libbluray)
+    EXTERNAL_LIBRARIES+=("libfreetype")
+    EXTERNAL_LIBRARIES+=("libbluray")
+    ;; 
   --enable-all-free | -all-free)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
     ;;
