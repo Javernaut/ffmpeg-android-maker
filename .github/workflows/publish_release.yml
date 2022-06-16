@@ -25,7 +25,7 @@ jobs:
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
-          ./ffmpeg-android-maker.sh ${{ build_options }} -abis=${{ matrix.abi }}
+          ./ffmpeg-android-maker.sh ${{ buildOptions }} -abis=${{ matrix.abi }}
       - name: Pack artifacts
         run: tar -cf build.tar.gz build/
            
