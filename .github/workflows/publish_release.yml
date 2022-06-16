@@ -1,3 +1,9 @@
+name: build release binaries
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        required: false
 jobs:
   release:
     runs-on: ubuntu-latest
