@@ -19,7 +19,7 @@ jobs:
       - name: Setup the environment
         run: |
           sudo pip3 install meson==0.58.2
-          sudo apt-get install nasm ninja-build
+          sudo apt-get install nasm ninja-build ant
 
       - name: Executing the script
         run: |
