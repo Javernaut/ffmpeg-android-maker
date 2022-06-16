@@ -3,8 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       build_options:
+        description: 'ffmepg build script options'   
         required: true
-        default: -libbluray -android=21
+        default: '-libbluray -android=21'
 jobs:
   release:
     runs-on: ubuntu-latest
