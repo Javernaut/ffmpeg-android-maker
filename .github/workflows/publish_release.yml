@@ -19,24 +19,31 @@ jobs:
       - name: Setup the environment
         run: |
           sudo pip3 install meson==0.58.2
-          sudo apt-get install nasm ninja-build
+          sudo apt-get install nasm ninja-build ant
 
       - name: Executing the script
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
-          ./ffmpeg-android-maker.sh ${{ build_options }} -abis=${{ matrix.abi }}
+          ./ffmpeg-android-maker.sh ${{ inputs.buildOptions }} -abis=${{ matrix.abi }}
       - name: Pack artifacts
         run: tar -cf build.tar.gz build/
-           
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Test with environment variables
+        run: echo $TAG_NAME - $RELEASE_NAME
+        env:
+          TAG_NAME: nightly-tag-${{ steps.date.outputs.date }}-${{ matrix.abi }}
+          RELEASE_NAME: nightly-release-${{ steps.date.outputs.date }}-${{ matrix.abi }}
       - name: Create Draft Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: <tofill>
-          release_name: <tofill>
+          tag_name: nightly-tag-${{ steps.date.outputs.date }}-${{ matrix.abi }}
+          release_name: nightly-release-${{ steps.date.outputs.date }}-${{ matrix.abi }}
           draft: true
           prerelease: false
 
@@ -46,7 +53,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build.tar.gz
-          asset_name: build.tar.gz
+          asset_name: build-${{ matrix.abi }}.tar.gz
           asset_content_type: application/gz
 
       - uses: eregon/publish-release@v1
