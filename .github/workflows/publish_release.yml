@@ -2,14 +2,15 @@ name: build release binaries
 on:
   workflow_dispatch:
     inputs:
-      message:
-        required: false
+      build_options:
+        required: true
+        default: -libbluray -android=21
 jobs:
   release:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        abi: [ "armeabi-v7a", "arm64-v8a", "x86", "x86_64" ]
+        abi: [ "armeabi-v7a", "arm64-v8a" ]
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +24,7 @@ jobs:
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
-          ./ffmpeg-android-maker.sh -all-free -all-gpl -android=21 -abis=${{ matrix.abi }}
+          ./ffmpeg-android-maker.sh ${{ build_options }} -abis=${{ matrix.abi }}
       - name: Pack artifacts
         run: tar -cf build.tar.gz build/
            
