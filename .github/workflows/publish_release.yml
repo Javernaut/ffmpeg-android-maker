@@ -35,8 +35,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: <tofill>
-          release_name: <tofill>
+          tag_name: ${{ matrix.abi }}
+          release_name: ${{ matrix.abi }}
           draft: true
           prerelease: false
 
@@ -46,7 +46,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./build.tar.gz
-          asset_name: build.tar.gz
+          asset_name: build-${{ matrix.abi }}.tar.gz
           asset_content_type: application/gz
 
       - uses: eregon/publish-release@v1
