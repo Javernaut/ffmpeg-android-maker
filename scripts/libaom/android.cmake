@@ -16,7 +16,7 @@ include("$ENV{ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake")
 if(DEFINED CMAKE_ASM_NASM_COMPILER)
   set(AS_EXECUTABLE ${CMAKE_ASM_NASM_COMPILER})
 else()
-  set(AS_EXECUTABLE ${_CMAKE_TOOLCHAIN_PREFIX}as)
+  set(AS_EXECUTABLE ${ANDROID_ASM_COMPILER})
 endif()
 
 # AV1 Codec Library doesn't recognise 'i686' as CMAKE_SYSTEM_PROCESSOR
