@@ -112,8 +112,7 @@ for argument in "$@"; do
     EXTERNAL_LIBRARIES+=("libx264")
     FFMPEG_GPL_ENABLED=true
     ;;
-  --enable-libbluray | -libbluray)
-    EXTERNAL_LIBRARIES+=("libfreetype")
+  --enable-libbluray | -bluray)
     EXTERNAL_LIBRARIES+=("libbluray")
     ;; 
   --enable-all-free | -all-free)
