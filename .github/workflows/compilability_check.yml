@@ -8,7 +8,7 @@ jobs:
         abi: [ "armeabi-v7a", "arm64-v8a", "x86", "x86_64" ]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup the environment
         run: |
