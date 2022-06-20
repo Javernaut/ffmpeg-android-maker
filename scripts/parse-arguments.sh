@@ -116,7 +116,6 @@ for argument in "$@"; do
     ;;
   --enable-mbedtls | -mbedtls)
     EXTERNAL_LIBRARIES+=("mbedtls")
-    FFMPEG_MBEDTLS_ENABLED=true
     ;;
   --enable-libbluray | -bluray)
     EXTERNAL_LIBRARIES+=("libbluray")
