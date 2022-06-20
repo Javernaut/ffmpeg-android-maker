@@ -27,6 +27,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "libfreetype"
   "libfribidi"
   "mbedtls"
+  "libbluray"
 )
 
 # All GPL libraries that are supported
@@ -116,6 +117,8 @@ for argument in "$@"; do
   --enable-mbedtls | -mbedtls)
     EXTERNAL_LIBRARIES+=("mbedtls")
     FFMPEG_MBEDTLS_ENABLED=true
+  --enable-libbluray | -bluray)
+    EXTERNAL_LIBRARIES+=("libbluray")
     ;; 
   --enable-all-free | -all-free)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
