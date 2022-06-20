@@ -10,9 +10,12 @@ LIBS="-lz" \
     --prefix=${INSTALL_DIR} \
     --host=${TARGET} \
     --with-sysroot=${SYSROOT_PATH} \
+    --disable-shared \
     --enable-static \
+    --disable-examples \
     --with-pic \
     --without-libxml2 \
+    --without-freetype \
     --without-fontconfig \
     --disable-bdjava-jar || exit 1
 
