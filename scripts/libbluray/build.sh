@@ -4,8 +4,6 @@ CC=${FAM_CC} \
 AR=${FAM_AR} \
 AS=${FAM_AS} \
 RANLIB=${FAM_RANLIB} \
-STRIP=${FAM_STRIP} \
-LIBS="-lz" \
 ./configure \
     --prefix=${INSTALL_DIR} \
     --host=${TARGET} \
