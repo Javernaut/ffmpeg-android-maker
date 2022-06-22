@@ -8,6 +8,7 @@
 # See the end of this file for more description.
 ABIS_TO_BUILD=()
 API_LEVEL=19
+SOURCE_URL=https://git.ffmpeg.org/ffmpeg.git
 SOURCE_TYPE=TAR
 SOURCE_VALUE=5.0.1
 EXTERNAL_LIBRARIES=()
@@ -61,6 +62,10 @@ for argument in "$@"; do
   --android-api-level=* | -android=*)
     API_LEVEL="${argument#*=}"
     ;;
+  # Checkout an alternative fork of the FFmpeg's git repository
+  --source-git-origin=*)
+    SOURCE_URL= "${argument#*=}"
+    echo ffmpeg url $SOURCE_URL
   # Checkout the particular tag in the FFmpeg's git repository
   --source-git-tag=*)
     SOURCE_TYPE=GIT_TAG
@@ -144,6 +149,7 @@ fi
 export FFMPEG_ABIS_TO_BUILD=${ABIS_TO_BUILD[@]}
 
 # Saving the information FFmpeg's source code downloading
+export FFMPEG_SOURCE_URL=$SOURCE_URL
 export FFMPEG_SOURCE_TYPE=$SOURCE_TYPE
 export FFMPEG_SOURCE_VALUE=$SOURCE_VALUE
 
