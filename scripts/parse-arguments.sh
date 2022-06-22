@@ -12,6 +12,7 @@ SOURCE_TYPE=TAR
 SOURCE_VALUE=5.0.1
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
+FFMPEG_MBEDTLS_ENABLED=false
 
 # All FREE libraries that are supported
 SUPPORTED_LIBRARIES_FREE=(
@@ -25,6 +26,7 @@ SUPPORTED_LIBRARIES_FREE=(
   "libwebp"
   "libfreetype"
   "libfribidi"
+  "mbedtls"
   "libbluray"
 )
 
@@ -111,6 +113,9 @@ for argument in "$@"; do
   --enable-libx264 | -x264)
     EXTERNAL_LIBRARIES+=("libx264")
     FFMPEG_GPL_ENABLED=true
+    ;;
+  --enable-mbedtls | -mbedtls)
+    EXTERNAL_LIBRARIES+=("mbedtls")
     ;;
   --enable-libbluray | -bluray)
     EXTERNAL_LIBRARIES+=("libbluray")
