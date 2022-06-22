@@ -16,6 +16,7 @@ LIBS="-lz" \
     --without-fontconfig \
     --disable-bdjava-jar || exit 1
 
+
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
 ${MAKE_EXECUTABLE} install

@@ -1,0 +1,63 @@
+name: Build release binaries
+on:
+  workflow_dispatch:
+    inputs:
+      buildOptions:
+        description: 'ffmepg build script options'   
+        required: true
+        default: '-libbluray -android=21'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        abi: [ "armeabi-v7a", "arm64-v8a" ]
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup the environment
+        run: |
+          sudo pip3 install meson==0.58.2
+          sudo apt-get install nasm ninja-build ant
+
+      - name: Executing the script
+        run: |
+          export ANDROID_SDK_HOME=$ANDROID_HOME
+          export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
+          ./ffmpeg-android-maker.sh ${{ inputs.buildOptions }} -abis=${{ matrix.abi }}
+      - name: Pack artifacts
+        run: tar -cf build.tar.gz build/
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Test with environment variables
+        run: echo $TAG_NAME - $RELEASE_NAME
+        env:
+          TAG_NAME: nightly-tag-${{ steps.date.outputs.date }}-${{ matrix.abi }}
+          RELEASE_NAME: nightly-release-${{ steps.date.outputs.date }}-${{ matrix.abi }}
+      - name: Create Draft Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: nightly-tag-${{ steps.date.outputs.date }}-${{ matrix.abi }}
+          release_name: nightly-release-${{ steps.date.outputs.date }}-${{ matrix.abi }}
+          draft: true
+          prerelease: false
+
+      - uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build.tar.gz
+          asset_name: build-${{ matrix.abi }}.tar.gz
+          asset_content_type: application/gz
+
+      - uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
