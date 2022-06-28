@@ -64,8 +64,8 @@ for argument in "$@"; do
     ;;
   # Checkout an alternative fork of the FFmpeg's git repository
   --source-git-origin=*)
-    SOURCE_URL= "${argument#*=}"
-    echo ffmpeg url $SOURCE_URL
+    SOURCE_URL="${argument#*=}"
+    ;;
   # Checkout the particular tag in the FFmpeg's git repository
   --source-git-tag=*)
     SOURCE_TYPE=GIT_TAG
