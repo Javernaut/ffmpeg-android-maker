@@ -87,7 +87,7 @@ for argument in "$@"; do
   --enable-libopus | -opus)
     EXTERNAL_LIBRARIES+=("libopus")
     ;;
-  --enable-webp | -webp)
+  --enable-libwebp | -webp)
     EXTERNAL_LIBRARIES+=("libwebp")
     ;;
   --enable-libwavpack | -wavpack)
