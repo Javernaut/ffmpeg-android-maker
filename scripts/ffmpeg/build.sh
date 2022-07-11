@@ -3,19 +3,15 @@
 case $ANDROID_ABI in
   x86)
     # Disabling assembler optimizations, because they have text relocations
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --disable-asm"
     ;;
   x86_64)
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${FAM_YASM}
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --x86asmexe=${FAM_YASM}"
     ;;
 esac
 
 if [ "$FFMPEG_GPL_ENABLED" = true ] ; then
     EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --enable-gpl"
-fi
-
-if [ "$FFMPEG_MBEDTLS_ENABLED" = true ] ; then
-EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS  --enable-protocol=https --enable-version3"
 fi
 
 # Preparing flags for enabling requested libraries
