@@ -3,10 +3,10 @@
 case $ANDROID_ABI in
   x86)
     # Disabling assembler optimizations, because they have text relocations
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --disable-asm"
     ;;
   x86_64)
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${FAM_YASM}
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --x86asmexe=${FAM_YASM}"
     ;;
 esac
 

@@ -81,6 +81,9 @@ export FAM_YASM=${TOOLCHAIN_PATH}/bin/yasm
 # A variable to which certain dependencies can add -l arguments during build.sh
 export FFMPEG_EXTRA_LD_FLAGS=
 
+# A variable to which certain dependencies can add addtional arguments during ffmpeg build.sh
+export EXTRA_BUILD_CONFIGURATION_FLAGS=
+
 export INSTALL_DIR=${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}
 
 # Forcing FFmpeg and its dependencies to look for dependencies
