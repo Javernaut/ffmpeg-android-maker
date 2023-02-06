@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM --platform=linux/amd64 ubuntu:22.04
 
 # Arguments that can be overridden in 'docker build' command:
 # Versions of Android SDK and NDK. The CMake is installed via NDK.
@@ -18,7 +18,7 @@ ENV ANDROID_SDK_HOME=${HOME_TWIN}/android-sdk
 ENV ANDROID_NDK_HOME=${ANDROID_SDK_HOME}/ndk/${VERSION_NDK}
 
 # Installing basic software
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get --allow-releaseinfo-change update && apt-get install -y --no-install-recommends \
   python3 \
   python3-pip \
   python3-setuptools \
@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   nasm \
   pkg-config \
   make \
+  git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
