@@ -6,4 +6,4 @@ FREETYPE_VERSION=2.12.1
 
 downloadTarArchive \
   "libfreetype" \
-  "https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE_VERSION}.tar.gz" \
+  "https://nav.dl.sourceforge.net/project/freetype/freetype2/${FREETYPE_VERSION}/freetype-${FREETYPE_VERSION}.tar.gz"
