@@ -29,5 +29,6 @@ function downloadTarArchive() {
     rm ${ARCHIVE_NAME}
   fi
 
-  export SOURCES_DIR_${LIBRARY_NAME}=$(pwd)/${LIBRARY_SOURCES}
+  SANITIZED_COMPONENT_NAME=$(echo ${LIBRARY_NAME} | sed "s/-/_/")
+  export SOURCES_DIR_${SANITIZED_COMPONENT_NAME}=$(pwd)/${LIBRARY_SOURCES}
 }

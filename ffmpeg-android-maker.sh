@@ -84,13 +84,14 @@ do
   # Executing the component-specific script for downloading the source code
   source ${SCRIPTS_DIR}/${COMPONENT}/download.sh
 
+  SANITIZED_COMPONENT_NAME=$(echo ${COMPONENT} | sed "s/-/_/")
   # The download.sh script has to export SOURCES_DIR_$COMPONENT variable
   # with actual path of the source code. This is done for possiblity to switch
   # between different verions of a component.
   # If it isn't set, consider SOURCE_DIR_FOR_COMPONENT as the proper value
-  COMPONENT_SOURCES_DIR_VARIABLE=SOURCES_DIR_${COMPONENT}
+  COMPONENT_SOURCES_DIR_VARIABLE=SOURCES_DIR_${SANITIZED_COMPONENT_NAME}
   if [[ -z "${!COMPONENT_SOURCES_DIR_VARIABLE}" ]]; then
-     export SOURCES_DIR_${COMPONENT}=${SOURCE_DIR_FOR_COMPONENT}
+     export SOURCES_DIR_${SANITIZED_COMPONENT_NAME}=${SOURCE_DIR_FOR_COMPONENT}
   fi
 
   # Returning to the rood directory. Just in case.
@@ -106,7 +107,8 @@ do
   for COMPONENT in ${COMPONENTS_TO_BUILD[@]}
   do
     echo "Building the component: ${COMPONENT}"
-    COMPONENT_SOURCES_DIR_VARIABLE=SOURCES_DIR_${COMPONENT}
+    SANITIZED_COMPONENT_NAME=$(echo ${COMPONENT} | sed "s/-/_/")
+    COMPONENT_SOURCES_DIR_VARIABLE=SOURCES_DIR_${SANITIZED_COMPONENT_NAME}
 
     # Going to the actual source code directory of the current component
     cd ${!COMPONENT_SOURCES_DIR_VARIABLE}
