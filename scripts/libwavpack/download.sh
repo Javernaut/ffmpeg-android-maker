@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-WAVPACK_VERSION=5.4.0
+WAVPACK_VERSION=5.6.0
 
 downloadTarArchive \
   "libwavpack" \

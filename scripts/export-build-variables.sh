@@ -55,6 +55,7 @@ export CROSS_PREFIX_WITH_PATH=${TOOLCHAIN_PATH}/bin/llvm-
 # The FAM_ prefix is used to eliminate passing those values implicitly to build systems
 export FAM_ADDR2LINE=${CROSS_PREFIX_WITH_PATH}addr2line
 export        FAM_AR=${CROSS_PREFIX_WITH_PATH}ar
+export        FAM_AS=${CROSS_PREFIX_WITH_PATH}as
 export        FAM_NM=${CROSS_PREFIX_WITH_PATH}nm
 export   FAM_OBJCOPY=${CROSS_PREFIX_WITH_PATH}objcopy
 export   FAM_OBJDUMP=${CROSS_PREFIX_WITH_PATH}objdump
@@ -69,7 +70,6 @@ export TARGET=${TARGET_TRIPLE_MACHINE_CC}-linux-${TARGET_TRIPLE_OS}${ANDROID_PLA
 export FAM_CC=${TOOLCHAIN_PATH}/bin/${TARGET}-clang
 export FAM_CXX=${FAM_CC}++
 export FAM_LD=${FAM_CC}
-export FAM_AS=${FAM_CC}
 
 # TODO consider abondaning this strategy of defining the name of the clang wrapper
 # in favour of just passing -mstackrealign and -fno-addrsig depending on
@@ -80,6 +80,9 @@ export FAM_YASM=${TOOLCHAIN_PATH}/bin/yasm
 
 # A variable to which certain dependencies can add -l arguments during build.sh
 export FFMPEG_EXTRA_LD_FLAGS=
+
+# A variable to which certain dependencies can add addtional arguments during ffmpeg build.sh
+export EXTRA_BUILD_CONFIGURATION_FLAGS=
 
 export INSTALL_DIR=${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}
 

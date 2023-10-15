@@ -6,10 +6,10 @@ case $ANDROID_ABI in
     ;;
   x86)
     # Disabling assembler optimizations, because they have text relocations
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--disable-asm
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --disable-asm"
     ;;
   x86_64)
-    EXTRA_BUILD_CONFIGURATION_FLAGS=--x86asmexe=${FAM_YASM}
+    EXTRA_BUILD_CONFIGURATION_FLAGS="$EXTRA_BUILD_CONFIGURATION_FLAGS --x86asmexe=${FAM_YASM}"
     ;;
 esac
 
@@ -49,6 +49,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --extra-ldflags="$DEP_LD_FLAGS" \
   --enable-shared \
   --disable-static \
+  --disable-vulkan \
   --pkg-config=${PKG_CONFIG_EXECUTABLE} \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
   --disable-runtime-cpudetect \

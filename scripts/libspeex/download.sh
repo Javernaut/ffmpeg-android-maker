@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-SPEEX_VERSION=1.2.0
+SPEEX_VERSION=1.2.1
 
 downloadTarArchive \
   "libspeex" \

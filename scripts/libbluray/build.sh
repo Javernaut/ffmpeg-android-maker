@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 
+CC=${FAM_CC} \
+AR=${FAM_AR} \
+AS=${FAM_AS} \
+RANLIB=${FAM_RANLIB} \
 ./configure \
     --prefix=${INSTALL_DIR} \
     --host=${TARGET} \
     --with-sysroot=${SYSROOT_PATH} \
     --disable-shared \
     --enable-static \
+    --disable-examples \
     --with-pic \
-    CC=${FAM_CC} \
-    AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB} || exit 1
-
-# libsharpyuv.a is available alongside the libwebp.a
-export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lm -lsharpyuv"
+    --without-libxml2 \
+    --without-freetype \
+    --without-fontconfig \
+    --disable-bdjava-jar || exit 1
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}

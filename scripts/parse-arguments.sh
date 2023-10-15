@@ -9,7 +9,7 @@
 ABIS_TO_BUILD=()
 API_LEVEL=19
 SOURCE_TYPE=TAR
-SOURCE_VALUE=5.0
+SOURCE_VALUE=6.0
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
 
@@ -25,6 +25,8 @@ SUPPORTED_LIBRARIES_FREE=(
   "libwebp"
   "libfreetype"
   "libfribidi"
+  "mbedtls"
+  "libbluray"
 )
 
 # All GPL libraries that are supported
@@ -86,7 +88,7 @@ for argument in "$@"; do
   --enable-libopus | -opus)
     EXTERNAL_LIBRARIES+=("libopus")
     ;;
-  --enable-webp | -webp)
+  --enable-libwebp | -webp)
     EXTERNAL_LIBRARIES+=("libwebp")
     ;;
   --enable-libwavpack | -wavpack)
@@ -111,6 +113,12 @@ for argument in "$@"; do
     EXTERNAL_LIBRARIES+=("libx264")
     FFMPEG_GPL_ENABLED=true
     ;;
+  --enable-mbedtls | -mbedtls)
+    EXTERNAL_LIBRARIES+=("mbedtls")
+    ;;
+  --enable-libbluray | -bluray)
+    EXTERNAL_LIBRARIES+=("libbluray")
+    ;; 
   --enable-all-free | -all-free)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_FREE[@]}"
     ;;
