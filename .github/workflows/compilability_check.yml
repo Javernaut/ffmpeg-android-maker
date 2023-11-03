@@ -19,4 +19,4 @@ jobs:
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export ANDROID_NDK_HOME=$ANDROID_NDK
-          ./ffmpeg-android-maker.sh -all-free -all-gpl -android=21 -abis=${{ matrix.abi }}
+          ./ffmpeg-android-maker.sh -x265 -android=24 -abis=${{ matrix.abi }}
