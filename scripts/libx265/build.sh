@@ -20,9 +20,17 @@ ${CMAKE_EXECUTABLE} ../source \
  -DENABLE_EXAMPLES=0 \
  -DENABLE_TOOLS=0
 
-sed -i '' 's/-lpthread/-pthread/' CMakeFiles/cli.dir/link.txt
-sed -i '' 's/-lpthread/-pthread/' CMakeFiles/x265-shared.dir/link.txt
-sed -i '' 's/-lpthread/-pthread/' CMakeFiles/x265-static.dir/link.txt
+# TODO Make it prettier
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  sed -i '' 's/-lpthread/-pthread/' CMakeFiles/cli.dir/link.txt
+  sed -i '' 's/-lpthread/-pthread/' CMakeFiles/x265-shared.dir/link.txt
+  sed -i '' 's/-lpthread/-pthread/' CMakeFiles/x265-static.dir/link.txt
+else
+  sed -i 's/-lpthread/-pthread/' CMakeFiles/cli.dir/link.txt
+  sed -i 's/-lpthread/-pthread/' CMakeFiles/x265-shared.dir/link.txt
+  sed -i 's/-lpthread/-pthread/' CMakeFiles/x265-static.dir/link.txt
+fi
+
 
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
 ${MAKE_EXECUTABLE} install
