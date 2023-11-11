@@ -1,5 +1,5 @@
 name: Compilability check
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -18,5 +18,5 @@ jobs:
       - name: Executing the script
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
-          export ANDROID_NDK_HOME=$ANDROID_NDK
-          ./ffmpeg-android-maker.sh -dav1d -android=19 -abis=${{ matrix.abi }}
+          export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
+          ./ffmpeg-android-maker.sh -dav1d -abis=${{ matrix.abi }}

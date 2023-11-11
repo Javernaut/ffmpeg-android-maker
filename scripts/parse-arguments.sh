@@ -7,9 +7,9 @@
 # Can be overridden with specific arguments.
 # See the end of this file for more description.
 ABIS_TO_BUILD=()
-API_LEVEL=19
+API_LEVEL=21
 SOURCE_TYPE=TAR
-SOURCE_VALUE=6.0
+SOURCE_VALUE=6.1
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
 
@@ -32,6 +32,7 @@ SUPPORTED_LIBRARIES_FREE=(
 # All GPL libraries that are supported
 SUPPORTED_LIBRARIES_GPL=(
   "libx264"
+  "libx265"
 )
 
 for argument in "$@"; do
@@ -111,6 +112,10 @@ for argument in "$@"; do
     ;;
   --enable-libx264 | -x264)
     EXTERNAL_LIBRARIES+=("libx264")
+    FFMPEG_GPL_ENABLED=true
+    ;;
+  --enable-libx265 | -x265)
+    EXTERNAL_LIBRARIES+=("libx265")
     FFMPEG_GPL_ENABLED=true
     ;;
   --enable-mbedtls | -mbedtls)
