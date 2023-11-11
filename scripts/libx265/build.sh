@@ -6,31 +6,31 @@ rm -rf ${CMAKE_BUILD_DIR}
 mkdir ${CMAKE_BUILD_DIR}
 cd ${CMAKE_BUILD_DIR}
 
+EXTRA_CMAKE_ARG=""
+case $ANDROID_ABI in
+  arm64-v8a|x86)
+    # Disabling assembler optimizations for certain ABIs. Not a good solution, but it at least works
+    EXTRA_CMAKE_ARG="-DENABLE_ASSEMBLY=OFF"
+    ;;
+esac
+
 ${CMAKE_EXECUTABLE} ../source \
  -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
  -DANDROID_ABI=${ANDROID_ABI} \
  -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
  -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
- -DANDROID_ARM_NEON=1 \
- -DCONFIG_PIC=1 \
- -DCONFIG_RUNTIME_CPU_DETECT=0 \
- -DENABLE_TESTS=0 \
- -DENABLE_DOCS=0 \
- -DENABLE_TESTDATA=0 \
- -DENABLE_EXAMPLES=0 \
- -DENABLE_TOOLS=0
+ -DENABLE_PIC=ON \
+ $EXTRA_CMAKE_ARG
 
-# TODO Make it prettier
+EXTRA_SED_ARG=""
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i '' 's/-lpthread/-pthread/' CMakeFiles/cli.dir/link.txt
-  sed -i '' 's/-lpthread/-pthread/' CMakeFiles/x265-shared.dir/link.txt
-  sed -i '' 's/-lpthread/-pthread/' CMakeFiles/x265-static.dir/link.txt
-else
-  sed -i 's/-lpthread/-pthread/' CMakeFiles/cli.dir/link.txt
-  sed -i 's/-lpthread/-pthread/' CMakeFiles/x265-shared.dir/link.txt
-  sed -i 's/-lpthread/-pthread/' CMakeFiles/x265-static.dir/link.txt
+  EXTRA_SED_ARG="''"
 fi
+sed -i $EXTRA_SED_ARG 's/-lpthread/-pthread/' CMakeFiles/cli.dir/link.txt
+sed -i $EXTRA_SED_ARG 's/-lpthread/-pthread/' CMakeFiles/x265-shared.dir/link.txt
+sed -i $EXTRA_SED_ARG 's/-lpthread/-pthread/' CMakeFiles/x265-static.dir/link.txt
 
+export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lm -lc++"
 
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
 ${MAKE_EXECUTABLE} install
