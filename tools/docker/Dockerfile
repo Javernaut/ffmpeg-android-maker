@@ -3,7 +3,7 @@ FROM --platform=linux/amd64 ubuntu:22.04
 # Arguments that can be overridden in 'docker build' command:
 # Versions of Android SDK and NDK. The CMake is installed via NDK.
 ARG VERSION_SDK=10406996
-ARG VERSION_NDK=25.2.9519653
+ARG VERSION_NDK=26.1.10909125
 ARG VERSION_CMAKE=3.22.1
 
 # Package to install via pip3
@@ -25,7 +25,7 @@ RUN apt-get --allow-releaseinfo-change update && apt-get install -y --no-install
   python3-wheel \
   ninja-build \
   build-essential \
-  openjdk-8-jdk-headless \
+  openjdk-17-jdk-headless \
   curl \
   unzip \
   bash \
