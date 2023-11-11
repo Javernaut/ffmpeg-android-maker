@@ -25,7 +25,7 @@ RUN apt-get --allow-releaseinfo-change update && apt-get install -y --no-install
   python3-wheel \
   ninja-build \
   build-essential \
-  openjdk-8-jdk-headless \
+  openjdk-17-jdk-headless \
   curl \
   unzip \
   bash \
