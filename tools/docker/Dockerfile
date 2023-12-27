@@ -7,7 +7,7 @@ ARG VERSION_NDK=26.1.10909125
 ARG VERSION_CMAKE=3.22.1
 
 # Package to install via pip3
-ARG VERSION_MESON=1.3.0
+ARG VERSION_MESON=1.3.1
 
 # The HOME variable isn't available for ENV directive (during building an image).
 # So we define one manually. For alpine and ubuntu it should be '/root'
