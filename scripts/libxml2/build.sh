@@ -16,9 +16,7 @@
     AR=${FAM_AR} \
     RANLIB=${FAM_RANLIB} || exit 1
 
-
 export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lm -lz"
-
 
 ${MAKE_EXECUTABLE} clean
 ${MAKE_EXECUTABLE} -j${HOST_NPROC}
