@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-ADDITIONAL_FLAGS=
-
 ./autogen.sh \
     --prefix=${INSTALL_DIR} \
     --host=${TARGET} \
@@ -16,8 +14,7 @@ ADDITIONAL_FLAGS=
     --without-lzma \
     CC=${FAM_CC} \
     AR=${FAM_AR} \
-    RANLIB=${FAM_RANLIB} \
-    ${ADDITIONAL_FLAGS} || exit 1
+    RANLIB=${FAM_RANLIB} || exit 1
 
 
 export FFMPEG_EXTRA_LD_FLAGS="${FFMPEG_EXTRA_LD_FLAGS} -lm -lz"
