@@ -8,11 +8,11 @@ jobs:
         abi: [ "armeabi-v7a", "arm64-v8a", "x86", "x86_64" ]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup the environment
         run: |
-          sudo pip3 install meson==1.2.2
+          sudo pip3 install meson==1.4.0
           sudo apt-get install nasm ninja-build
 
       - name: Executing the script
