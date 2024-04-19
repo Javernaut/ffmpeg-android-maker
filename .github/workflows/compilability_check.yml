@@ -5,18 +5,16 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
+        ffmpeg: [ "6.0.1", "6.1.1", "7.0" ]
+        ndk: [ "26.3.11579264", "27.0.11718014" ]
         abi: [ "armeabi-v7a", "arm64-v8a", "x86", "x86_64" ]
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup the environment
-        run: |
-          sudo pip3 install meson==1.4.0
-          sudo apt-get install nasm ninja-build
-
       - name: Executing the script
         run: |
+          echo "yes" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "ndk;${{ matrix.ndk }}"
           export ANDROID_SDK_HOME=$ANDROID_HOME
-          export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
-          ./ffmpeg-android-maker.sh -all-free -all-gpl -android=24 -abis=${{ matrix.abi }}
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ matrix.ndk }}
+          ./ffmpeg-android-maker.sh --source-tar=${{ matrix.ffmpeg }} -abis=${{ matrix.abi }}
