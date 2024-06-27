@@ -34,7 +34,12 @@ export BUILD_DIR_EXTERNAL=$BUILD_DIR/external
 function prepareOutput() {
   OUTPUT_LIB=${OUTPUT_DIR}/lib/${ANDROID_ABI}
   mkdir -p ${OUTPUT_LIB}
-  cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB}
+  if [ "$ENABLE_SHARED" -eq 1 ]; then
+    cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so ${OUTPUT_LIB}
+  fi
+  if [ "$ENABLE_STATIC" -eq 1 ]; then
+    cp ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.a ${OUTPUT_LIB}
+  fi
 
   OUTPUT_HEADERS=${OUTPUT_DIR}/include/${ANDROID_ABI}
   mkdir -p ${OUTPUT_HEADERS}
@@ -46,7 +51,12 @@ function prepareOutput() {
 # Otherwise the whole script is interrupted
 function checkTextRelocations() {
   TEXT_REL_STATS_FILE=${STATS_DIR}/text-relocations.txt
-  ${FAM_READELF} --dynamic ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE}
+  if [ "$ENABLE_SHARED" -eq 1 ]; then
+    ${FAM_READELF} --dynamic ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.so | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE}
+  fi
+  if [ "$ENABLE_STATIC" -eq 1 ]; then
+    ${FAM_READELF} --dynamic ${BUILD_DIR_FFMPEG}/${ANDROID_ABI}/lib/*.a | grep 'TEXTREL\|File' >> ${TEXT_REL_STATS_FILE}
+  fi
 
   if grep -q TEXTREL ${TEXT_REL_STATS_FILE}; then
     echo "There are text relocations in output files:"

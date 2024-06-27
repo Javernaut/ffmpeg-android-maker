@@ -25,6 +25,9 @@ done
 DEP_CFLAGS="-I${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include"
 DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
 
+PARAM_SHARED=$([ "$ENABLE_SHARED" -eq 1 ] && echo "--enable-shared" || echo "--disable-shared")
+PARAM_STATIC=$([ "$ENABLE_STATIC" -eq 1 ] && echo "--enable-static" || echo "--disable-static")
+
 ./configure \
   --prefix=${BUILD_DIR_FFMPEG}/${ANDROID_ABI} \
   --enable-cross-compile \
@@ -41,8 +44,8 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --strip=${FAM_STRIP} \
   --extra-cflags="-O3 -fPIC $DEP_CFLAGS" \
   --extra-ldflags="$DEP_LD_FLAGS" \
-  --enable-shared \
-  --disable-static \
+  ${PARAM_SHARED} \
+  ${PARAM_STATIC} \
   --disable-vulkan \
   --pkg-config=${PKG_CONFIG_EXECUTABLE} \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
