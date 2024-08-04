@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-XML_VERSION=2.13.1
+XML_VERSION=2.13.3
 
 downloadTarArchive \
   "libxml2" \
