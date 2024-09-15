@@ -14,7 +14,7 @@ case $ANDROID_ABI in
     ;;
 esac
 
-${CMAKE_EXECUTABLE} ../source \
+${CMAKE_EXECUTABLE} ../x265_${LIBX265_VERSION}/source \
  -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
  -DANDROID_ABI=${ANDROID_ABI} \
  -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK_HOME}/build/cmake/android.toolchain.cmake \
