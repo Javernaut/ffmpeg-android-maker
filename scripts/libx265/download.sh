@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-LIBX265_VERSION=3.6
+LIBX265_VERSION=4.0
 
 downloadTarArchive \
   "libx265" \
