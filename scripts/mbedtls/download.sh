@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MBEDTLS_VERSION=v3.6.0
+MBEDTLS_VERSION=v3.6.1
 
 git clone \
  --depth 1 \
