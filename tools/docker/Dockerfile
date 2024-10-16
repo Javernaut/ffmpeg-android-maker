@@ -4,7 +4,7 @@ FROM --platform=linux/amd64 ubuntu:22.04
 # Versions of Android SDK and NDK. The CMake is installed via NDK.
 ARG VERSION_SDK=11076708
 ARG VERSION_NDK=27.1.12297006
-ARG VERSION_CMAKE=3.22.1
+ARG VERSION_CMAKE=3.30.4
 
 # Package to install via pip3
 ARG VERSION_MESON=1.5.2
@@ -28,6 +28,7 @@ RUN apt-get --allow-releaseinfo-change update && apt-get install -y --no-install
   openjdk-17-jdk-headless \
   curl \
   unzip \
+  cmake \
   bash \
   nasm \
   pkg-config \
