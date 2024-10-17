@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-VPX_VERSION=v1.14.0
+VPX_VERSION=v1.14.1
 
 downloadTarArchive \
   "libvpx" \
