@@ -52,6 +52,8 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --disable-vulkan \
   --pkg-config=${PKG_CONFIG_EXECUTABLE} \
   ${EXTRA_BUILD_CONFIGURATION_FLAGS} \
+  --enable-jni \
+  --enable-pthreads \
   --disable-runtime-cpudetect \
   --disable-programs \
   --disable-muxers \
@@ -62,13 +64,13 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --disable-avfilter \
   --disable-doc \
   --disable-debug \
-  --disable-pthreads \
   --disable-network \
   --disable-bsfs \
   --disable-protocols \
   --enable-protocol=file \
   --enable-protocol=pipe \
   --enable-protocol=fd \
+  --enable-protocol=android_content \
   $ADDITIONAL_COMPONENTS || exit 1
 
 ${MAKE_EXECUTABLE} clean
