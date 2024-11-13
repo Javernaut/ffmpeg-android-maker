@@ -68,7 +68,6 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --disable-bsfs \
   --disable-protocols \
   --enable-protocol=file \
-  --enable-protocol=pipe \
   --enable-protocol=fd \
   --enable-protocol=android_content \
   $ADDITIONAL_COMPONENTS || exit 1
