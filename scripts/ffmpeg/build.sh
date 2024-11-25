@@ -28,7 +28,11 @@ done
 DEP_CFLAGS="-I${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include"
 DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
 
-# Everything that goes below ${EXTRA_BUILD_CONFIGURATION_FLAGS} is my project-specific.
+# Android 15 with 16 kb page size support
+# https://developer.android.com/guide/practices/page-sizes#compile-r27
+EXTRA_LDFLAGS="-Wl,-z,max-page-size=16384 $DEP_LD_FLAGS"
+
+# Everything that goes below ${EXTRA_BUILD_CONFIGURATION_FLAGS} is specific to MediaFile.
 # You are free to enable/disable whatever you actually need.
 
 ./configure \
@@ -46,7 +50,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --ranlib=${FAM_RANLIB} \
   --strip=${FAM_STRIP} \
   --extra-cflags="-O3 -fPIC $DEP_CFLAGS" \
-  --extra-ldflags="$DEP_LD_FLAGS" \
+  --extra-ldflags="$EXTRA_LDFLAGS" \
   --enable-shared \
   --disable-static \
   --disable-vulkan \
