@@ -25,6 +25,10 @@ done
 DEP_CFLAGS="-I${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/include"
 DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
 
+# Android 15 with 16 kb page size support
+# https://developer.android.com/guide/practices/page-sizes#compile-r27
+EXTRA_LDFLAGS="-Wl,-z,max-page-size=16384 $DEP_LD_FLAGS"
+
 ./configure \
   --prefix=${BUILD_DIR_FFMPEG}/${ANDROID_ABI} \
   --enable-cross-compile \
@@ -40,7 +44,7 @@ DEP_LD_FLAGS="-L${BUILD_DIR_EXTERNAL}/${ANDROID_ABI}/lib $FFMPEG_EXTRA_LD_FLAGS"
   --ranlib=${FAM_RANLIB} \
   --strip=${FAM_STRIP} \
   --extra-cflags="-O3 -fPIC $DEP_CFLAGS" \
-  --extra-ldflags="$DEP_LD_FLAGS" \
+  --extra-ldflags="$EXTRA_LDFLAGS" \
   --enable-shared \
   --disable-static \
   --disable-vulkan \
