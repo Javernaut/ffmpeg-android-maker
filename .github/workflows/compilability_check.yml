@@ -14,8 +14,14 @@ jobs:
         run: |
           sudo apt install meson nasm ninja-build
 
+      - name: Testing the path
+        run: ls $ANDROID_HOME/cmdline-tools/latest
+
+      - name: Install NDK
+        run: echo "y" | sudo $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;29.0.13113456" --sdk_root=${ANDROID_HOME}
+
       - name: Executing the script
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
-          export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/29.0.13113456
           ./ffmpeg-android-maker.sh -all-free -all-gpl -android=24 -abis=${{ matrix.abi }}
