@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-FREETYPE_VERSION=2.13.3
+FREETYPE_VERSION=2.14.1
 
 downloadTarArchive \
   "libfreetype" \
