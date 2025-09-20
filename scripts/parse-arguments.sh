@@ -93,9 +93,6 @@ for argument in "$@"; do
   --enable-libwebp | -webp)
     EXTERNAL_LIBRARIES+=("libwebp")
     ;;
-  --enable-libwavpack | -wavpack)
-    EXTERNAL_LIBRARIES+=("libwavpack")
-    ;;
   --enable-libtwolame | -twolame)
     EXTERNAL_LIBRARIES+=("libtwolame")
     ;;
