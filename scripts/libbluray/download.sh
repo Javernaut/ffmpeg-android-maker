@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-LIBBLURAY_VERSION=1.3.4
+LIBBLURAY_VERSION=1.4.1
 
 downloadTarArchive \
   "libbluray" \
