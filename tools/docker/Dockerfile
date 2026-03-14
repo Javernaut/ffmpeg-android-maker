@@ -2,8 +2,8 @@ FROM --platform=linux/amd64 ubuntu:24.04
 
 # Arguments that can be overridden in 'docker build' command:
 # Versions of Android SDK and NDK.
-ARG VERSION_SDK=13114758
-ARG VERSION_NDK=28.2.13676358
+ARG VERSION_SDK=14742923
+ARG VERSION_NDK=29.0.14206865
 
 # The HOME variable isn't available for ENV directive (during building an image).
 # So we define one manually. For alpine and ubuntu it should be '/root'
