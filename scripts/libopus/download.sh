@@ -2,7 +2,7 @@
 
 source ${SCRIPTS_DIR}/common-functions.sh
 
-OPUS_VERSION=1.5.2
+OPUS_VERSION=1.6.1
 
 downloadTarArchive \
   "libopus" \
