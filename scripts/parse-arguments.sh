@@ -12,6 +12,7 @@ SOURCE_TYPE=TAR
 SOURCE_VALUE=8.1
 EXTERNAL_LIBRARIES=()
 FFMPEG_GPL_ENABLED=false
+USER_EXTRA_CONFIG_FLAGS=""
 
 # All FREE libraries that are supported
 SUPPORTED_LIBRARIES_FREE=(
@@ -121,7 +122,7 @@ for argument in "$@"; do
     ;;
   --enable-libbluray | -bluray)
     EXTERNAL_LIBRARIES+=("libbluray")
-    ;; 
+    ;;
   --enable-libxml2 | -xml2)
     EXTERNAL_LIBRARIES+=("libxml2")
     ;;
@@ -131,6 +132,10 @@ for argument in "$@"; do
   --enable-all-gpl | -all-gpl)
     EXTERNAL_LIBRARIES+=" ${SUPPORTED_LIBRARIES_GPL[@]}"
     FFMPEG_GPL_ENABLED=true
+    ;;
+  # Pass extra FFmpeg configuration flags directly to ./configure
+  --extra-ffmpeg-config-flags=*)
+    USER_EXTRA_CONFIG_FLAGS="${argument#*=}"
     ;;
   *)
     echo "Unknown argument $argument"
@@ -159,3 +164,6 @@ export FFMPEG_EXTERNAL_LIBRARIES=${EXTERNAL_LIBRARIES[@]}
 # Desired Android API level to use during compilation
 # Will be replaced with 21 for 64bit ABIs if the value is less than 21
 export DESIRED_ANDROID_API_LEVEL=${API_LEVEL}
+
+# User-provided extra configuration flags for FFmpeg's ./configure
+export USER_EXTRA_FFMPEG_CONFIG_FLAGS=${USER_EXTRA_CONFIG_FLAGS}

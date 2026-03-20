@@ -66,6 +66,12 @@ Certain external libraries require additional software to be installed. Check th
 
 ## Features
 
+**Pass extra FFmpeg configuration flags**. You can pass additional flags directly to FFmpeg's `./configure` script using the `--extra-ffmpeg-config-flags` argument. For example:
+```bash
+./ffmpeg-android-maker.sh --extra-ffmpeg-config-flags="--disable-programs --disable-doc"
+```
+This allows you to customize the FFmpeg build without modifying the build scripts.
+
 **Add an arbitrary external library that FFMpeg supports to the building process**. Just specify how the source code needs to be downloaded and how to perform the build operation. More about this is [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/External-libraries-integration).
 
 **Setting your own FFmpeg version and origin**. You can actually override the version of FFmpeg used by the script. See details [here](https://github.com/Javernaut/ffmpeg-android-maker/wiki/Setting-the-FFmpeg-version).
